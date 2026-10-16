@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.svg" width="120" height="120" alt="Halftone logo">
+  <img src="https://gethalftone.eu/og-image.png" width="120" height="120" alt="Halftone logo">
 </p>
 
 <h1 align="center">Halftone</h1>

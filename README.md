@@ -1,87 +1,140 @@
-# Halftone
+<p align="center">
+  <img src="docs/logo.svg" width="120" height="120" alt="Halftone logo">
+</p>
 
-Een Android-muziekspeler voor je eigen Subsonic-server (Navidrome, Airsonic, Gonic, …), gebouwd met Kotlin, Jetpack Compose en Media3.
+<h1 align="center">Halftone</h1>
 
-De hele app kleurt mee met het hoesje dat speelt: accentkleuren, achtergrondverlopen en de speler halen hun tinten uit de albumhoes en vloeien zacht over als het nummer wisselt.
+<p align="center">
+  <strong>Your own music, in every shade.</strong><br>
+  A beautiful Android music player for Navidrome and any Subsonic server.
+</p>
 
-## Wat zit erin
+<p align="center">
+  <a href="#building">Build</a> ·
+  <a href="https://github.com/shadowfaxnl/Halftone/issues/new?labels=enhancement">Suggest a feature</a> ·
+  <a href="https://github.com/shadowfaxnl/Halftone/issues/new?labels=bug">Report a bug</a> ·
+  <a href="README.nl.md">Nederlands</a>
+</p>
 
-**Bladeren en afspelen**
-- Inloggen op elke Subsonic-server met token-authenticatie
-- Home met begroeting, *Shuffle mix*, *Verras me*, een uitgelicht album, je afspeellijsten en rijen met recent gespeeld, nieuw, vaak gedraaid en ontdekken
-- Bibliotheek met tabbladen: Afspeellijsten, Favorieten, Artiesten, Albums en Downloads
-- Artiest-, album- en afspeellijstpagina's met grote hoesjes en kleurgloed
-- Zoeken terwijl je typt
-- Afspelen op de achtergrond met melding, vergrendelscherm en Bluetooth-knoppen
-- Miniplayer en een volledig spelerscherm met vegen voor volgende/vorige en een wachtrij
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-E8457A" alt="License: GPL-3.0"></a>
+  <img src="https://img.shields.io/badge/Android-8.0%2B-FF9A5C" alt="Android 8.0+">
+  <img src="https://img.shields.io/badge/Subsonic%20API-1.16.1-7A5CFF" alt="Subsonic API 1.16.1">
+</p>
 
-**Nieuw in 0.4: Engels en Nederlands**
-- De hele interface staat in Android-taalbestanden: Engels is de standaard, Nederlands is ingebouwd (`res/values/strings.xml` en `res/values-nl/strings.xml`).
-- De app volgt de taal van je telefoon. Op Android 13+ kies je via Instellingen › Taal een taal alleen voor Halftone.
-- Een taal toevoegen? Kopieer `values/strings.xml` naar bijvoorbeeld `values-de/`, vertaal de teksten en voeg de taal toe aan `res/xml/locales_config.xml`.
+---
 
-**Sinds 0.3: de huisstijl**
-- Nieuwe naam: **Halftone**, met package `app.halftone`.
-- App-icoon met het rasterlogo, plus een éénkleurige versie voor de themed icons van Android 13+ en een eigen icoon in de mediamelding.
-- Merkkleuren koraal, roze en violet op donkere inkt. Zolang er niets speelt is koraal het accent, daarna nemen de hoesjes het over.
-- Lettertypes Bricolage Grotesque (koppen) en Manrope (tekst).
-- Inlogscherm met het logo en een langzaam ademend rasterveld; het logo staat ook op Home en in Instellingen.
+Halftone plays the music library on your own server and takes its colours from whatever album is playing. Buttons, gradients and the player pick up the tones of the cover and fade over when the track changes, so every album gets its own app.
 
-**Sinds 0.2**
-- **Afspeellijsten**: maken, hernoemen, verwijderen; nummers of hele albums toevoegen via het menu, nummers eruit halen. Wijzigingen staan meteen op je server, dus ook in de webinterface van Navidrome.
-- **Favorieten**: hartje bij nummers (ook in de speler), albums en artiesten. Eigen tabblad met alles bij elkaar; kleine hartjes in elke nummerlijst.
-- **Scrobbelen**: Halftone meldt "speelt nu" en telt een nummer als beluisterd na de helft of na vier minuten. Daardoor kloppen *Recent gespeeld* en *Vaak gedraaid*, en Navidrome kan het doorsturen naar Last.fm of ListenBrainz. Offline luisteren wordt later alsnog doorgegeven. Uit te zetten in Instellingen.
-- **Offline downloaden**: per nummer, album of afspeellijst. Downloads zijn het originele bestand, met voortgang in de lijst en in een melding. Gedownloade nummers spelen altijd lokaal, ook als je wél verbinding hebt. Ook de hoesjes worden bewaard. Kun je de server niet bereiken, dan biedt het startscherm *Luister je downloads* aan.
-- **Gapless afspelen**: het volgende nummer staat al klaar voordat het huidige afloopt, en ExoPlayer haalt de stiltes van de encoder weg. Live-albums en klassieke werken lopen naadloos door.
-- **Instellingen**: streamkwaliteit (origineel, 320, 192 of 128 kbps), scrobbelen aan/uit, opslagruimte van downloads en alles in één keer wissen.
+It is built with Kotlin, Jetpack Compose and Media3, and talks straight to your server. There is no Halftone account, no analytics and no ads.
 
-## Bouwen
+## Features
 
-Je hebt nodig: **Android Studio** (Narwhal 2025.1 of nieuwer) en een telefoon of emulator met Android 8.0+.
+**Browsing and playback**
+- Sign in to any Subsonic server with token authentication. Your password never travels in plain text.
+- Home with Shuffle mix, Surprise me, a featured album, your playlists and shelves for recently played, recently added, most played and discover. Pull down to refresh.
+- Library tabs for playlists, favourites, artists, albums and downloads.
+- Artist, album and playlist pages with large covers and a colour glow taken from the artwork.
+- Search as you type, across artists, albums and songs.
+- Background playback with controls in the notification, on the lock screen and on Bluetooth headsets. Audio focus is handled for calls and navigation prompts.
+- Mini player and a full-screen player: swipe the cover for next or previous, swipe down to close. Includes a queue you can jump around in and edit.
 
-1. Pak de zip uit en kies in Android Studio **File → Open** en dan de map `Halftone`.
-2. Laat Gradle synchroniseren.
-3. Druk op **Run ▶**.
+**Your server stays in charge**
+- **Playlists**: create, rename and delete them, add songs or whole albums, and remove tracks. Changes are saved on your server, so the Navidrome web UI and your other clients stay in sync.
+- **Favourites**: heart songs (including the one that's playing), albums and artists. Favourites have their own tab and show up as a small heart in every list.
+- **Scrobbling**: Halftone reports "now playing" and counts a play after half the track or four minutes, whichever comes first. This keeps *Recently played* and *Most played* accurate, and Navidrome can forward plays to Last.fm or ListenBrainz. Plays made offline are sent later. You can turn it off in Settings.
 
-Of vanaf de command line: `./gradlew assembleDebug`. De APK staat dan in `app/build/outputs/apk/debug/`.
+**Listening anywhere**
+- **Offline downloads** for songs, albums and playlists. Downloads are the original files, with their covers, and always play locally, even when you're online. If the server can't be reached, the home screen offers your downloads.
+- **Gapless playback**: the next track is buffered before the current one ends, and encoder padding is trimmed, so live albums and DJ mixes flow on without a gap.
+- **Streaming quality**: original, 320, 192 or 128 kbps.
 
-> De code is geschreven en grondig nagelopen, maar kon niet gecompileerd worden in de omgeving waarin hij is gemaakt (geen toegang tot de Android-buildservers). Geeft de eerste build een fout, plak de melding dan terug in het gesprek.
+**Look and feel**
+- Dynamic colours from every album cover, with checks that keep text readable.
+- Dark theme with the Halftone palette (coral, rose and violet), Bricolage Grotesque for headings and Manrope for text.
+- Adaptive app icon with a themed (monochrome) version for Android 13+.
+- English and Dutch. The app follows your phone's language, and on Android 13+ you can pick a language just for Halftone.
 
-## Lettertypes
+## Requirements
 
-De lettertypes van de huisstijl (Bricolage Grotesque en Manrope, beide onder de SIL Open Font License) haalt Gradle bij de eerste build op van de Google Fonts-repository op GitHub en zet ze in `app/src/main/assets/fonts/`. Lukt dat niet, bijvoorbeeld zonder internet, dan bouwt de app gewoon en gebruikt hij het systeemlettertype. Je kunt de bestanden ook zelf neerzetten als `manrope.ttf` en `bricolage_grotesque.ttf`.
+| | |
+|---|---|
+| Android | 8.0 (API 26) or newer |
+| Server | Navidrome, Gonic, Airsonic-Advanced, Ampache or any other Subsonic-compatible server |
+| Protocol | Subsonic API 1.16.1 with token authentication |
+| Connection | HTTPS, or HTTP on your home network |
 
-## Serveradres
+## Building
 
-Typ het adres zoals je Navidrome in de browser opent, bijvoorbeeld `muziek.jouwdomein.nl` of `192.168.1.20:4533`. Zonder `http://` of `https://` kiest Halftone zelf: http voor lokale adressen en adressen met een poort, anders https.
+You need [Android Studio](https://developer.android.com/studio) (Narwhal 2025.1 or newer) and a phone or emulator running Android 8.0+.
 
-## Goed om te weten
+```bash
+git clone https://github.com/shadowfaxnl/Halftone.git
+cd Halftone
+./gradlew assembleDebug
+```
 
-- **Gapless werkt het best met streamkwaliteit "Origineel"** (en met downloads, die altijd origineel zijn). Bij een lagere bitrate zet de server het bestand om, en niet elke omzetting bewaart de informatie die nodig is voor naadloze overgangen.
-- Downloads staan in de privé-opslag van de app en worden nooit automatisch opgeruimd. Uitloggen laat ze staan; verwijderen kan per album/afspeellijst of via Instellingen.
-- Afspeellijsten van anderen kun je afspelen, maar alleen je eigen lijsten aanpassen (dat bepaalt de server).
-- Op Android 13+ vraagt Halftone bij de eerste download of hij meldingen mag tonen, voor de voortgang. Weigeren mag; downloaden werkt dan nog steeds.
-- Inloggegevens staan lokaal in DataStore. `usesCleartextTraffic` staat aan zodat lokale servers via http werken.
-- De release-build is voor het gemak ondertekend met de debug-sleutel. Vervang dat in `app/build.gradle.kts` voordat je de app deelt.
+The APK ends up in `app/build/outputs/apk/debug/`. In Android Studio, open the project folder and press **Run**.
 
-## Opbouw
+**Fonts.** On the first build, Gradle downloads the brand fonts (Bricolage Grotesque and Manrope, both under the SIL Open Font License) from the Google Fonts repository into `app/src/main/assets/fonts/`. If that fails, for example without an internet connection, the build continues and the app uses the system font. You can also place `manrope.ttf` and `bricolage_grotesque.ttf` there yourself.
+
+**Release builds** are signed with the debug key for convenience. Set up your own signing config in `app/build.gradle.kts` before you distribute the app.
+
+## Signing in
+
+Enter the address you use to open Navidrome in your browser, for example `music.example.com` or `192.168.1.20:4533`. Without `http://` or `https://`, Halftone picks HTTP for local addresses and addresses with a port, and HTTPS for everything else. A path such as `/navidrome` is fine.
+
+## Good to know
+
+- **Gapless works best with streaming quality set to Original**, and with downloads, which are always original. At a lower bitrate the server transcodes the file, and not every transcoder keeps the information needed for seamless transitions.
+- **Downloads** live in the app's private storage and are never cleaned up automatically. Signing out keeps them. You can remove them per album or playlist, or all at once in Settings.
+- **Playlists owned by other users** can be played, but only your own can be edited. Your server enforces this.
+- **Notifications.** On Android 13+, Halftone asks for permission to show notifications the first time you download something, to show progress. Downloading still works if you decline.
+- **Credentials** are stored on the device only (DataStore). Cleartext traffic is allowed so that servers on your home network work over HTTP. Turn `usesCleartextTraffic` off in `AndroidManifest.xml` if you only use HTTPS.
+
+## Project structure
 
 ```
 app/src/main/java/app/halftone/
 ├── HalftoneApp.kt, MainActivity.kt
-├── AppContainer.kt        alle onderdelen op één plek
-├── data/                  Subsonic-client, modellen, repository, favorieten, voorkeuren
-├── download/              Media3 DownloadManager + DownloadService
-├── playback/              PlaybackService (cache, gapless-buffer), Scrobbler, PlayerConnection
+├── AppContainer.kt        wires everything together
+├── Str.kt                 strings outside Compose
+├── data/                  Subsonic client, models, repository, favourites, preferences
+├── download/              Media3 DownloadManager and DownloadService
+├── playback/              PlaybackService (cache, gapless buffer), scrobbler, player connection
 └── ui/
-    ├── theme/             donker thema, kleuren uit hoesjes
-    ├── common/            hoesjes, kaarten, rijen, kop voor album/afspeellijst, knoppen
+    ├── theme/             dark theme, brand fonts, colours from covers
+    ├── common/            covers, cards, rows, collection header, logo, buttons
     ├── home/ library/ artist/ album/ search/
-    ├── playlist/          afspeellijstpagina, overzicht, "toevoegen aan"-onderblad
+    ├── playlist/          playlist page, overview, "add to playlist" sheet
     ├── favorites/ downloads/ settings/
-    └── player/            miniplayer, spelerscherm, wachtrij
+    └── player/            mini player, now playing, queue
 ```
 
-## Ideeën voor later
+## Translations
 
-Android Auto, een widget op het startscherm, songteksten, ReplayGain, en de wachtrij bewaren na het sluiten van de app.
+All text lives in Android string resources: English in `app/src/main/res/values/strings.xml`, Dutch in `values-nl/strings.xml`. To add a language, copy the English file to a folder such as `values-de/`, translate it, and add the language to `app/src/main/res/xml/locales_config.xml`. Pull requests are welcome.
+
+## Roadmap
+
+Ideas we're considering:
+
+- Android Auto
+- Home screen widget
+- Synced lyrics
+- ReplayGain
+- Remember the queue after the app closes
+
+Want one of these, or something else? [Open an issue](https://github.com/shadowfaxnl/Halftone/issues/new?labels=enhancement) and tell us how you'd use it.
+
+## License
+
+Halftone is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License v3.0](LICENSE) as published by the Free Software Foundation. It is distributed in the hope that it will be useful, but without any warranty.
+
+Copyright © 2026 [shadowfaxnl](https://github.com/shadowfaxnl) and contributors. Any version you distribute, including modified ones, must also be released under the GPL-3.0 with its source code.
+
+The brand fonts Bricolage Grotesque and Manrope are licensed separately under the SIL Open Font License 1.1.
+
+## Acknowledgements
+
+Halftone builds on [Media3](https://developer.android.com/media/media3), [Jetpack Compose](https://developer.android.com/compose), [OkHttp](https://square.github.io/okhttp/), [Coil](https://coil-kt.github.io/coil/) and [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). Navidrome and Subsonic are independent projects; Halftone is not affiliated with them.

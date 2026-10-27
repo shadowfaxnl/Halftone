@@ -1,16 +1,18 @@
 <p align="center">
-  <img src="https://gethalftone.eu/og-image.png" width="1200" height="630" alt="Halftone logo">
+  <img src="docs/logo.svg" width="120" height="120" alt="Halftone logo">
 </p>
 
 <h1 align="center">Halftone</h1>
 
 <p align="center">
   <strong>Your own music, in every shade.</strong><br>
-  A beautiful Android music player for Navidrome and any Subsonic server.
+  A beautiful music player for Android and Linux, for Navidrome and any Subsonic server.
 </p>
 
 <p align="center">
+  <a href="https://gethalftone.eu">Website</a> ·
   <a href="#building">Build</a> ·
+  <a href="#linux-desktop">Linux</a> ·
   <a href="https://github.com/shadowfaxnl/Halftone/issues/new?labels=enhancement">Suggest a feature</a> ·
   <a href="https://github.com/shadowfaxnl/Halftone/issues/new?labels=bug">Report a bug</a> ·
   <a href="README.nl.md">Nederlands</a>
@@ -19,6 +21,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-E8457A" alt="License: GPL-3.0"></a>
   <img src="https://img.shields.io/badge/Android-8.0%2B-FF9A5C" alt="Android 8.0+">
+  <img src="https://img.shields.io/badge/Linux-AppImage-FF9A5C" alt="Linux AppImage">
   <img src="https://img.shields.io/badge/Subsonic%20API-1.16.1-7A5CFF" alt="Subsonic API 1.16.1">
 </p>
 
@@ -80,6 +83,49 @@ The APK ends up in `app/build/outputs/apk/debug/`. In Android Studio, open the p
 
 **Release builds** are signed with the debug key for convenience. Set up your own signing config in `app/build.gradle.kts` before you distribute the app.
 
+## Linux desktop
+
+The `desktop/` folder holds a Linux client built with Compose Multiplatform. It shares the Kotlin data layer with the Android app and has the same features: home, search, library, playlists, favourites, scrobbling, downloads, gapless playback, colours from covers and English/Dutch. The layout is made for a desktop, with a sidebar, a player bar at the bottom and a queue panel.
+
+### Install
+
+1. Install **libmpv**, which Halftone uses for playback:
+
+   | Distribution | Command |
+   |---|---|
+   | Debian, Ubuntu, Mint | `sudo apt install libmpv2` (older releases: `libmpv1`) |
+   | Fedora | `sudo dnf install mpv-libs` (needs RPM Fusion) |
+   | Arch, Manjaro | `sudo pacman -S mpv` |
+   | openSUSE | `sudo zypper install libmpv2` |
+
+2. Download `Halftone-x.y.z-x86_64.AppImage` from [Releases](https://github.com/shadowfaxnl/Halftone/releases), make it executable and run it:
+
+   ```bash
+   chmod +x Halftone-*-x86_64.AppImage
+   ./Halftone-*-x86_64.AppImage
+   ```
+
+The AppImage contains its own Java runtime, so you don't need Java installed.
+
+### Desktop integration
+
+- **Media keys and panels.** Halftone registers over MPRIS (`org.mpris.MediaPlayer2.halftone`), so media keys, the GNOME and KDE media controls and `playerctl` work.
+- **Keyboard shortcuts.** Space plays or pauses, Ctrl+→ and Ctrl+← skip, Ctrl+F searches, Ctrl+L likes the current song, Alt+← goes back and Esc closes the player.
+- **Files.** Settings are in `~/.config/halftone/settings.json` (readable by your user only), downloads in `~/.local/share/halftone/downloads` and cached covers in `~/.cache/halftone`.
+
+### Build from source
+
+You need JDK 17 or newer.
+
+```bash
+cd desktop
+./gradlew run                        # start the app
+./gradlew createDistributable        # app folder in build/compose/binaries/main/app
+packaging/build-appimage.sh          # AppImage in build/appimage
+```
+
+The [Linux AppImage](.github/workflows/linux-appimage.yml) workflow builds the AppImage on every push to `desktop/`, and attaches it to the release when you push a tag such as `v0.4.0`.
+
 ## Signing in
 
 Enter the address you use to open Navidrome in your browser, for example `music.example.com` or `192.168.1.20:4533`. Without `http://` or `https://`, Halftone picks HTTP for local addresses and addresses with a port, and HTTPS for everything else. A path such as `/navidrome` is fine.
@@ -111,6 +157,10 @@ app/src/main/java/app/halftone/
     └── player/            mini player, now playing, queue
 ```
 
+## Website
+
+The project website, [gethalftone.eu](https://gethalftone.eu), lives in [`docs/`](docs/index.html), together with its icons, social preview image, sitemap and `robots.txt`. To publish it with GitHub Pages, go to **Settings › Pages**, choose **Deploy from a branch**, select the `main` branch with the `/docs` folder, and enter `gethalftone.eu` as the custom domain (the `CNAME` file is already there). The site uses Google Analytics only after a visitor agrees to it.
+
 ## Translations
 
 All text lives in Android string resources: English in `app/src/main/res/values/strings.xml`, Dutch in `values-nl/strings.xml`. To add a language, copy the English file to a folder such as `values-de/`, translate it, and add the language to `app/src/main/res/xml/locales_config.xml`. Pull requests are welcome.
@@ -124,6 +174,7 @@ Ideas we're considering:
 - Synced lyrics
 - ReplayGain
 - Remember the queue after the app closes
+- Flatpak for the Linux client
 
 Want one of these, or something else? [Open an issue](https://github.com/shadowfaxnl/Halftone/issues/new?labels=enhancement) and tell us how you'd use it.
 

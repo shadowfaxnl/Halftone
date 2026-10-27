@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Halftone
+GenericName=Music Player
+GenericName[nl]=Muziekspeler
+Comment=A beautiful player for Subsonic and Navidrome servers
+Comment[nl]=Een prachtige speler voor Subsonic- en Navidrome-servers
+Exec=halftone %U
+Icon=halftone
+Terminal=false
+Categories=AudioVideo;Audio;Player;
+Keywords=music;subsonic;navidrome;player;audio;
+StartupWMClass=app-halftone-desktop-MainKt

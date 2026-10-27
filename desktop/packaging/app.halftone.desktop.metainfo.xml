@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>app.halftone.desktop</id>
+  <name>Halftone</name>
+  <summary>A beautiful player for Subsonic and Navidrome servers</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer id="eu.gethalftone"><name>Halftone</name></developer>
+  <description>
+    <p>Halftone streams your own music library from a Subsonic-compatible server such as Navidrome.
+    The interface takes its colours from the album that is playing.</p>
+    <ul>
+      <li>Gapless playback via libmpv</li>
+      <li>Playlists, favourites and scrobbling</li>
+      <li>Offline downloads</li>
+      <li>Media keys and desktop integration via MPRIS</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">halftone.desktop</launchable>
+  <url type="homepage">https://gethalftone.eu</url>
+  <url type="vcs-browser">https://github.com/shadowfaxnl/Halftone</url>
+  <url type="bugtracker">https://github.com/shadowfaxnl/Halftone/issues</url>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.4.0" date="2026-10-27"/>
+  </releases>
+</component>

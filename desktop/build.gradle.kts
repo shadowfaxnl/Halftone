@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import java.net.URI
 
 plugins {
     kotlin("jvm") version "2.2.0"
@@ -66,7 +67,7 @@ val fetchBrandFonts by tasks.registering {
         fontDir.mkdirs()
         if ((fontDir.listFiles()?.count { it.name.endsWith(".ttf") } ?: 0) >= 8) return@doLast
         val css = runCatching {
-            val url = java.net.URI(
+            val url = URI(
                 "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800" +
                     "&family=Manrope:wght@400;500;600;700;800",
             ).toURL()
@@ -85,7 +86,7 @@ val fetchBrandFonts by tasks.registering {
             val target = File(fontDir, name)
             if (target.exists() && target.length() > 10_000) return@forEach
             runCatching {
-                java.net.URI(src).toURL().openStream().use { input -> target.outputStream().use { input.copyTo(it) } }
+                target.writeBytes(URI(src).toURL().readBytes())
                 logger.lifecycle("Halftone: $name opgehaald")
             }.onFailure { target.delete() }
         }

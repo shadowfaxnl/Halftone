@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Halftone · Navidrome & Subsonic player for Android and Linux</title>
+<meta name="description" content="Free, open-source player for Navidrome and Subsonic, on Android, Android Auto and Linux. Colours from every album cover, offline downloads, gapless playback and scrobbling.">
+<meta name="keywords" content="Navidrome client, Subsonic client, Android music player, Android Auto music, Linux music player, self-hosted music, OpenSubsonic, Gonic, Airsonic, offline music, gapless">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="shadowfaxnl">
+<link rel="canonical" href="https://gethalftone.eu/">
+<link rel="alternate" hreflang="en" href="https://gethalftone.eu/">
+<meta name="theme-color" content="#0B0B10">
+<meta name="color-scheme" content="dark">
+
+<!-- Favicons -->
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon-16.png" type="image/png" sizes="16x16">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+
+<!-- Social previews -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Halftone">
+<meta property="og:title" content="Halftone · Navidrome & Subsonic player for Android and Linux">
+<meta property="og:description" content="Free, open-source player for Navidrome and Subsonic, on Android, Android Auto and Linux. Colours from every album cover, offline downloads, gapless playback and scrobbling.">
+<meta property="og:url" content="https://gethalftone.eu/">
+<meta property="og:image" content="https://gethalftone.eu/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Halftone logo with the tagline: Your own music, in every shade.">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Halftone · Navidrome & Subsonic player for Android and Linux">
+<meta name="twitter:description" content="Free, open-source player for Navidrome and Subsonic, on Android, Android Auto and Linux. Colours from every album cover, offline downloads, gapless playback and scrobbling.">
+<meta name="twitter:image" content="https://gethalftone.eu/og-image.png">
+
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Halftone",
+  "description": "Free, open-source player for Navidrome and Subsonic, on Android, Android Auto and Linux. Colours from every album cover, offline downloads, gapless playback and scrobbling.",
+  "url": "https://gethalftone.eu/",
+  "image": "https://gethalftone.eu/og-image.png",
+  "applicationCategory": "MultimediaApplication",
+  "applicationSubCategory": "Music player",
+  "operatingSystem": "Android 8.0 or newer (with Android Auto), Linux (x86_64)",
+  "offers": {
+   "@type": "Offer",
+   "price": "0",
+   "priceCurrency": "EUR"
+  },
+  "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "isAccessibleForFree": true,
+  "inLanguage": [
+   "en",
+   "nl"
+  ],
+  "featureList": [
+   "Colours from every album cover",
+   "Offline downloads",
+   "Gapless playback",
+   "Playlists synced with your server",
+   "Favourites",
+   "Scrobbling",
+   "Streaming quality 128–320 kbps or original",
+   "Linux desktop app with MPRIS media keys",
+   "Android Auto with voice search"
+  ],
+  "sameAs": [
+   "https://github.com/shadowfaxnl/Halftone"
+  ],
+  "author": {
+   "@type": "Person",
+   "name": "shadowfaxnl",
+   "url": "https://github.com/shadowfaxnl"
+  }
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+   {
+    "@type": "Question",
+    "name": "Do I need my own server?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Yes. Halftone plays music from a server you run yourself, such as Navidrome on a home server, NAS or VPS. It has no music catalogue of its own."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Does it work without internet?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Songs, albums and playlists you've downloaded play anywhere. If the app can't reach your server, it offers your downloads right away."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Where is my password stored?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Only on your own device. Each request to your server uses a salted hash instead of the password itself."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Why does every screen look different?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Halftone reads the colours of the cover that's playing and builds the theme from them, with checks so text always stays readable."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Will my plays show up on Last.fm?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Halftone reports plays to your server. Connect Last.fm or ListenBrainz in Navidrome and it forwards them for you. You can turn scrobbling off in Settings."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "How do I install Halftone on Linux?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Install libmpv with your package manager (for example sudo apt install libmpv2), download the AppImage, make it executable with chmod +x and run it. Java is included."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Does Halftone work with Android Auto?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Yes. Browse playlists, favourites, artists and downloads on the car's screen, search, or use Google Assistant voice commands."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Is there an iPhone version?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Not right now. Halftone runs on Android and Linux."
+    }
+   }
+  ]
+ }
+]
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one dark printed sheet. A halftone dot field sits behind the hero and
+   recolours with the demo cover; everything below is calm, left-aligned, two-column at desktop. */
+:root {
+  color-scheme: dark;
+  --ink: #0B0B10;
+  --ink-2: #13121A;
+  --ink-3: #1C1A25;
+  --line: #2A2734;
+  --fg: #F1EFF6;
+  --fg-dim: #B4B0C1;
+  --fg-faint: #858196;
+  --coral: #FF9A5C;
+  --rose: #E8457A;
+  --violet: #7A5CFF;
+  --live: #FF9A5C;          /* recoloured by the demo cover */
+  --live-2: #E8457A;
+  --live-back: #3A1A2C;
+  --live-deep: #140A12;
+  --on-live: #140A10;
+
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2rem, 4.5vw, 3rem);
+  --step-4: clamp(2.8rem, 8vw, 5.6rem);
+  --radius: 18px;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--ink);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.02; }
+p { margin: 0; }
+a { color: var(--live); }
+a:hover { color: var(--fg); }
+:focus-visible { outline: 3px solid var(--live); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
+  padding-left: var(--gutter-l);
+  padding-right: var(--gutter-r);
+}
+.wrap > * { min-width: 0; }
+
+.label {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* ── Nav ─────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: color-mix(in srgb, var(--ink) 86%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; }
+.brand span { font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.03em; }
+.brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+.nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+.nav ul a { color: var(--fg-dim); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+.nav ul a:hover { color: var(--fg); }
+@media (max-width: 720px) { .nav ul li:not(:last-child) { display: none; } }
+
+/* ── Hero ────────────────────────────────────────── */
+.hero { position: relative; overflow: hidden; }
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(80% 70% at 78% 30%, color-mix(in srgb, var(--live-back) 85%, transparent), transparent 70%);
+  transition: background 0.8s ease;
+}
+#dotfield { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; pointer-events: none; }
+.hero .wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 48px;
+  align-items: center;
+  padding-block: 72px 88px;
+}
+@media (max-width: 880px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 48px 64px; } }
+.hero h1 { font-size: var(--step-4); font-weight: 800; letter-spacing: -0.045em; }
+.hero h1 em { font-style: normal; color: var(--live); transition: color 0.8s ease; }
+.lede { margin-top: 22px; font-size: var(--step-1); color: var(--fg-dim); max-width: 34ch; line-height: 1.5; }
+.cta-row { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 52px; padding: 12px 22px;
+  border-radius: 14px; border: 0;
+  font: 700 1rem/1 var(--body);
+  text-decoration: none; cursor: pointer;
+  transition: transform 0.15s ease, background 0.8s ease, color 0.2s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--live); color: var(--on-live); }
+.btn-primary:hover { color: var(--on-live); filter: brightness(1.08); }
+.btn-ghost { background: color-mix(in srgb, var(--fg) 9%, transparent); color: var(--fg); }
+.btn-ghost:hover { background: color-mix(in srgb, var(--fg) 15%, transparent); color: var(--fg); }
+.btn[aria-disabled="true"] { background: color-mix(in srgb, var(--fg) 7%, transparent); color: var(--fg-dim); cursor: default; }
+.btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+.btn small { display: block; font: 500 0.72rem/1.2 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.75; margin-bottom: 3px; }
+.meta-line { margin-top: 18px; font-family: var(--mono); font-size: 0.8rem; color: var(--fg-faint); }
+
+/* phone demo */
+.demo { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.phone {
+  width: min(300px, 100%);
+  aspect-ratio: 9 / 19;
+  max-width: 100%;
+  border-radius: 46px;
+  padding: 10px;
+  background: #050507;
+  box-shadow: 0 0 0 1px #2B2935, 0 40px 80px -20px color-mix(in srgb, var(--live) 45%, transparent);
+  transition: box-shadow 0.8s ease;
+}
+.screen {
+  height: 100%;
+  border-radius: 37px;
+  overflow: hidden;
+  padding: 26px 20px 22px;
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, var(--live-back) 0%, var(--live-deep) 62%, #09090C 100%);
+  transition: background 0.8s ease;
+}
+.screen .top { display: flex; justify-content: space-between; align-items: center; color: #fff; }
+.screen .top svg { width: 20px; height: 20px; opacity: 0.85; }
+.screen .from { text-align: center; line-height: 1.25; }
+.screen .from b { display: block; font-size: 0.72rem; }
+.screen .from span { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.6); }
+.cover-wrap { margin: auto 0; padding-top: 14px; }
+#cover {
+  width: 100%; aspect-ratio: 1; display: block;
+  border-radius: 16px;
+  box-shadow: 0 22px 40px -12px color-mix(in srgb, var(--live) 70%, transparent);
+  transition: box-shadow 0.8s ease;
+}
+.track { margin-top: 18px; display: flex; align-items: center; gap: 8px; }
+.track div { flex: 1; min-width: 0; }
+.track b { display: block; font-family: var(--display); font-size: 1.15rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track span { font-size: 0.8rem; color: rgba(255,255,255,0.68); }
+.track svg { width: 22px; height: 22px; color: var(--live); transition: color 0.8s ease; flex-shrink: 0; }
+.seek { margin-top: 14px; height: 4px; border-radius: 4px; background: rgba(255,255,255,0.18); position: relative; }
+.seek i { position: absolute; left: 0; top: 0; bottom: 0; width: 38%; border-radius: 4px; background: #fff; }
+.seek i::after { content: ""; position: absolute; right: -5px; top: -3px; width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+.times { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.58rem; color: rgba(255,255,255,0.55); margin-top: 6px; }
+.controls { margin-top: 10px; display: flex; justify-content: space-between; align-items: center; color: #fff; }
+.controls svg { width: 26px; height: 26px; }
+.controls .play {
+  width: 58px; height: 58px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--live); color: #0b0b10;
+  box-shadow: 0 10px 24px -6px color-mix(in srgb, var(--live) 80%, transparent);
+  transition: background 0.8s ease, box-shadow 0.8s ease;
+}
+.controls .play svg { width: 30px; height: 30px; }
+.controls .dim { opacity: 0.55; width: 20px; height: 20px; }
+
+.swatches { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.swatches .row { display: flex; gap: 10px; }
+.swatch {
+  width: 48px; height: 48px; padding: 0;
+  border-radius: 12px; border: 2px solid transparent;
+  cursor: pointer; overflow: hidden;
+  background: var(--ink-3);
+  transition: transform 0.15s ease, border-color 0.2s ease;
+}
+.swatch canvas { width: 100%; height: 100%; display: block; }
+.swatch:hover { transform: translateY(-2px); }
+.swatch[aria-pressed="true"] { border-color: var(--fg); }
+
+/* ── Servers strip ───────────────────────────────── */
+.servers { border-block: 1px solid var(--line); background: var(--ink-2); }
+.servers .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding-block: 22px; }
+.servers ul { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; margin: 0; padding: 0; }
+.servers li { font-family: var(--display); font-weight: 700; font-size: 1.15rem; color: var(--fg-dim); }
+
+/* ── Sections ────────────────────────────────────── */
+section.block .wrap { padding-block: 96px; }
+@media (max-width: 720px) { section.block .wrap { padding-block: 64px; } }
+.section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: end; margin-bottom: 48px; }
+@media (max-width: 880px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+.section-head h2 { font-size: var(--step-3); font-weight: 800; letter-spacing: -0.035em; }
+.section-head p { color: var(--fg-dim); max-width: 46ch; }
+.section-head .label { display: block; margin-bottom: 14px; }
+
+/* features */
+.features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+@media (max-width: 1000px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .features { grid-template-columns: minmax(0, 1fr); } }
+.feature { background: var(--ink); padding: 28px 24px 30px; display: flex; flex-direction: column; gap: 10px; }
+.feature .spec { font-family: var(--mono); font-size: 0.74rem; color: var(--coral); letter-spacing: 0.04em; }
+.feature h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+.feature p { color: var(--fg-dim); font-size: 0.96rem; line-height: 1.55; }
+
+/* why */
+.why { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 64px; }
+@media (max-width: 760px) { .why { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
+.why article { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 20px; align-items: start; }
+.why svg { width: 56px; height: 56px; }
+.why h3 { font-size: var(--step-2); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 10px; }
+.why p { color: var(--fg-dim); max-width: 48ch; }
+
+/* download */
+.download { background: var(--ink-2); border-block: 1px solid var(--line); }
+.download .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 48px; align-items: center; }
+@media (max-width: 880px) { .download .wrap { grid-template-columns: minmax(0, 1fr); } }
+.download h2 { font-size: var(--step-3); font-weight: 800; letter-spacing: -0.035em; }
+.download p { color: var(--fg-dim); margin-top: 14px; max-width: 46ch; }
+.reqs { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.reqs li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 0.96rem; }
+.reqs li span:first-child { color: var(--fg-faint); }
+.reqs li span:last-child { text-align: right; font-weight: 600; }
+
+/* new badge in hero */
+.news { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; padding: 6px 14px 6px 6px; border-radius: 999px; background: color-mix(in srgb, var(--fg) 7%, transparent); border: 1px solid var(--line); color: var(--fg); font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: background .2s; }
+.news:hover { background: color-mix(in srgb, var(--fg) 12%, transparent); color: var(--fg); }
+.news b { font: 600 0.7rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; background: var(--coral); color: #1A0D08; padding: 5px 8px; border-radius: 999px; }
+.news span[aria-hidden] { color: var(--fg-faint); }
+
+/* car spotlight */
+.car .wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+@media (max-width: 900px) { .car .wrap { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
+.car h2 { font-size: var(--step-3); font-weight: 800; letter-spacing: -0.035em; margin-top: 14px; }
+.car .intro { color: var(--fg-dim); margin-top: 14px; max-width: 44ch; }
+.car ul.points { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 16px; }
+.car ul.points li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; color: var(--fg-dim); }
+.car ul.points li strong { color: var(--fg); display: block; }
+.car ul.points svg { width: 24px; height: 24px; margin-top: 2px; }
+.car .hint { margin-top: 22px; font-size: 0.86rem; color: var(--fg-faint); max-width: 52ch; }
+
+.dash { position: relative; aspect-ratio: 16 / 8.2; border-radius: 26px; padding: 12px; background: linear-gradient(160deg, #24222d, #0d0c12); box-shadow: 0 40px 80px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06); }
+.dash-screen { position: relative; height: 100%; border-radius: 16px; overflow: hidden; background: radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--rose) 28%, transparent), transparent 60%), #0a090e; display: grid; grid-template-columns: 52px minmax(0, 1fr); }
+.dash-rail { border-right: 1px solid rgba(255,255,255,.06); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 14px 0; }
+.dash-rail i { display: block; width: 18px; height: 18px; border-radius: 6px; background: rgba(255,255,255,.18); }
+.dash-rail i.on { background: var(--coral); }
+.dash-rail .clock { font: 600 0.62rem var(--mono); color: var(--fg-dim); }
+.dash-main { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; padding: 12px 16px 10px; gap: 10px; min-width: 0; }
+.dash-tabs { display: flex; gap: 16px; font-size: clamp(0.58rem, 1.3vw, 0.78rem); font-weight: 600; color: var(--fg-faint); white-space: nowrap; overflow: hidden; }
+.dash-tabs .on { color: var(--fg); border-bottom: 2px solid var(--coral); padding-bottom: 3px; }
+.dash-group { font: 500 clamp(0.5rem, 1vw, 0.64rem) var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 6px; }
+.dash-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.dash-tile { aspect-ratio: 1; border-radius: 8px; position: relative; overflow: hidden; }
+.dash-tile::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,.55) 32%, transparent 34%); background-size: 9px 9px; mix-blend-mode: soft-light; }
+.dash-tile.t1 { background: linear-gradient(135deg, #FF9A5C, #E8457A 55%, #7A5CFF); }
+.dash-tile.t2 { background: linear-gradient(135deg, #4FD1C5, #1B6CA8 60%, #0F3240); }
+.dash-tile.t3 { background: linear-gradient(135deg, #F6C177, #EE8A4B 55%, #D4513B); }
+.dash-tile.t4 { background: linear-gradient(135deg, #A3E07A, #3FA66B 55%, #1F5F5B); }
+.dash-now { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.06); border-radius: 10px; padding: 7px 10px; min-width: 0; }
+.dash-now .art { width: clamp(22px, 3.4vw, 32px); aspect-ratio: 1; border-radius: 6px; background: linear-gradient(135deg, #FF9A5C, #E8457A); flex-shrink: 0; }
+.dash-now .txt { min-width: 0; flex: 1; font-size: clamp(0.56rem, 1.2vw, 0.74rem); line-height: 1.25; }
+.dash-now .txt b { display: block; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dash-now .txt span { color: var(--fg-faint); }
+.dash-now .play { width: clamp(22px, 3.2vw, 30px); aspect-ratio: 1; border-radius: 50%; background: var(--coral); display: grid; place-items: center; flex-shrink: 0; }
+.dash-now .play::before { content: ""; width: 0; height: 0; border-left: 8px solid #1A0D08; border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-left: 2px; }
+.voice { position: absolute; left: -14px; bottom: -22px; display: flex; align-items: center; gap: 10px; background: var(--ink-3); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; font-size: 0.86rem; color: var(--fg); box-shadow: 0 20px 40px -20px rgba(0,0,0,.8); max-width: 80%; }
+.voice svg { width: 18px; height: 18px; flex-shrink: 0; }
+@media (max-width: 560px) { .voice { position: static; margin: 14px 0 0; max-width: none; width: fit-content; font-size: 0.8rem; } .dash { aspect-ratio: auto; } .dash-screen { height: auto; min-height: 200px; } .dash { border-radius: 18px; padding: 8px; } .dash-rail { display: none; } .dash-screen { grid-template-columns: minmax(0, 1fr); } .dash-grid { gap: 6px; } }
+.linux-note { font-size: 0.9rem; color: var(--fg-faint) !important; margin-top: 18px !important; max-width: 52ch; }
+.linux-note code { font-family: var(--mono); font-size: 0.82rem; color: var(--fg); background: color-mix(in srgb, var(--fg) 9%, transparent); padding: 1px 6px; border-radius: 6px; white-space: nowrap; }
+
+/* suggest */
+.suggest-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; align-items: start; }
+@media (max-width: 920px) { .suggest-grid { grid-template-columns: minmax(0, 1fr); } }
+form.card { background: var(--ink-2); border: 1px solid var(--line); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+fieldset { border: 0; margin: 0; padding: 0; }
+legend, label.field-label { display: block; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
+.kinds { display: flex; flex-wrap: wrap; gap: 8px; }
+.kinds input { position: absolute; opacity: 0; pointer-events: none; }
+.kinds label {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px;
+  border-radius: 999px; border: 1px solid var(--line);
+  font-weight: 600; font-size: 0.95rem; color: var(--fg-dim); cursor: pointer;
+}
+.kinds input:checked + label { background: var(--coral); border-color: var(--coral); color: #1A0D08; }
+.kinds input:focus-visible + label { outline: 3px solid var(--coral); outline-offset: 2px; }
+input[type="text"], textarea {
+  width: 100%; font: 500 1rem/1.5 var(--body); color: var(--fg);
+  background: var(--ink); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px;
+}
+textarea { min-height: 140px; resize: vertical; }
+input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--coral); box-shadow: 0 0 0 3px color-mix(in srgb, var(--coral) 30%, transparent); }
+.hint { font-size: 0.85rem; color: var(--fg-faint); margin-top: 6px; }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; justify-content: space-between; }
+.form-foot .btn-primary { background: var(--coral); color: #1A0D08; }
+.form-note { font-size: 0.88rem; color: var(--fg-faint); max-width: 34ch; }
+.btn-primary[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+
+.ideas h3 { font-size: 1.25rem; margin-bottom: 6px; }
+.ideas > p { color: var(--fg-dim); font-size: 0.96rem; margin-bottom: 18px; }
+.ideas ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.ideas li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.ideas li b { font-weight: 700; }
+.ideas li span { grid-column: 1; color: var(--fg-dim); font-size: 0.92rem; }
+.ideas li button {
+  grid-row: 1 / span 2; grid-column: 2; align-self: center;
+  min-height: 44px; padding: 8px 14px; border-radius: 12px;
+  background: transparent; border: 1px solid var(--line); color: var(--fg-dim);
+  font: 600 0.88rem/1 var(--body); cursor: pointer;
+}
+.ideas li button:hover { border-color: var(--coral); color: var(--fg); }
+
+/* faq */
+.faq { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
+@media (max-width: 760px) { .faq { grid-template-columns: minmax(0, 1fr); } }
+details { border-top: 1px solid var(--line); padding: 18px 0; }
+summary { cursor: pointer; font-weight: 700; font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--mono); color: var(--fg-faint); }
+details[open] summary::after { content: "–"; }
+details p { margin-top: 10px; color: var(--fg-dim); max-width: 60ch; }
+
+footer .wrap { padding-block: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--fg-faint); font-size: 0.9rem; border-top: 1px solid var(--line); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+<style>
+/* Basis die de artifact-omgeving anders zelf toevoegde */
+html { -webkit-text-size-adjust: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* Toestemming voor statistieken */
+.consent {
+  position: fixed; z-index: 50;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  margin-inline: auto; max-width: 560px;
+  background: var(--ink-3); border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.7);
+  padding: 20px 20px 18px; display: flex; flex-direction: column; gap: 14px;
+}
+.consent h2 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+.consent p { color: var(--fg-dim); font-size: 0.94rem; line-height: 1.5; }
+.consent .row { display: flex; flex-wrap: wrap; gap: 10px; }
+.consent button {
+  flex: 1 1 140px; min-height: 46px; border-radius: 12px; cursor: pointer;
+  font: 700 0.98rem/1 var(--body); border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--fg) 8%, transparent); color: var(--fg);
+}
+.consent button:hover { background: color-mix(in srgb, var(--fg) 14%, transparent); }
+.linklike { background: none; border: 0; padding: 0; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+</style>
+
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Halftone, back to top">
+      <svg viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="26" fill="#17121F"></rect><g id="logo-dots"></g></svg>
+      <span>halftone</span>
+    </a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#why">Why Halftone</a></li>
+        <li><a href="#suggest">Suggest</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas id="dotfield" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div>
+        <a class="news" href="#car"><b>New</b> Halftone now works with Android Auto <span aria-hidden="true">→</span></a><br>
+        <span class="label">Navidrome &amp; Subsonic player for Android and Linux</span>
+        <h1 id="hero-title" style="margin-top: 18px">Your own music, in <em>every shade</em>.</h1>
+        <p class="lede">A Navidrome and Subsonic client that plays the library on your own server and takes its colours from whatever album is on. Every cover gets its own app.</p>
+        <div class="cta-row" id="hero-cta"></div>
+        <p class="meta-line">Android 8.0+ · Android Auto · Linux AppImage · Subsonic API 1.16 · Open source, GPL-3.0</p>
+      </div>
+
+      <div class="demo">
+        <div class="phone" role="img" aria-label="Halftone's now playing screen, coloured by the current album cover">
+          <div class="screen">
+            <div class="top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+              <div class="from"><span>PLAYING FROM</span><b id="demo-album">Harbour Lights</b></div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h13M3 12h13M3 18h9M19 15v6M16 18h6"></path></svg>
+            </div>
+            <div class="cover-wrap"><canvas id="cover" width="440" height="440" aria-hidden="true"></canvas></div>
+            <div class="track">
+              <div><b id="demo-title">Afterglow</b><span id="demo-artist">The Night Ferries</span></div>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2 0 3.5 1.1 4.4 2.5h2C13.9 6.1 15.4 5 17.4 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"></path></svg>
+            </div>
+            <div class="seek"><i></i></div>
+            <div class="times"><span>1:24</span><span>-2:17</span></div>
+            <div class="controls">
+              <svg class="dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"></path></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"></path></svg>
+              <span class="play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"></path></svg></span>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"></path></svg>
+              <svg class="dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"></path></svg>
+            </div>
+          </div>
+        </div>
+        <div class="swatches">
+          <span class="label" id="swatch-label">Pick a cover, watch the app follow</span>
+          <div class="row" role="group" aria-labelledby="swatch-label" id="swatch-row"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="servers">
+    <div class="wrap">
+      <span class="label">Plays from</span>
+      <ul>
+        <li>Navidrome</li>
+        <li>Gonic</li>
+        <li>Airsonic-Advanced</li>
+        <li>Ampache</li>
+        <li>any Subsonic server</li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="block" id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">Features</span>
+          <h2 id="features-title">Everything your server can do, in your pocket.</h2>
+        </div>
+        <p>Halftone talks straight to your server. Playlists, stars and play counts stay in sync with the web interface you already use.</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="spec">Palette · per cover</span>
+          <h3>Colours from every cover</h3>
+          <p>Buttons, gradients and the player pick up the tones of the album that's playing and fade over when the track changes.</p>
+        </article>
+        <article class="feature">
+          <span class="spec">Original files</span>
+          <h3>Offline listening</h3>
+          <p>Download a song, album or playlist. You get the original file, with its cover, and it plays locally even when you're online.</p>
+        </article>
+        <article class="feature">
+          <span class="spec">MP3 · AAC · FLAC · Opus</span>
+          <h3>Gapless playback</h3>
+          <p>The next track is ready before this one ends, so live albums and DJ mixes flow on without a click or a pause.</p>
+        </article>
+        <article class="feature">
+          <span class="spec">Synced both ways</span>
+          <h3>Playlists</h3>
+          <p>Create, rename and fill playlists on the go. Add a whole album in two taps. Changes land on your server at once.</p>
+        </article>
+        <article class="feature">
+          <span class="spec">Songs · albums · artists</span>
+          <h3>Favourites</h3>
+          <p>Heart anything, including the song that's playing. Your favourites have their own tab and show up in every list.</p>
+        </article>
+        <article class="feature">
+          <span class="spec">½ track or 4 min</span>
+          <h3>Scrobbling</h3>
+          <p>Plays are counted the standard way, so Recently played and Most played are right. Navidrome can pass them on to Last.fm or ListenBrainz.</p>
+        </article>
+        <article class="feature">
+          <span class="spec">128 · 192 · 320 · original</span>
+          <h3>Streaming quality</h3>
+          <p>Pick a bitrate for mobile data, or stream the untouched original at home. Downloads are always the original.</p>
+        </article>
+        <article class="feature">
+          <span class="spec">Media session</span>
+          <h3>Plays in the background</h3>
+          <p>Controls in your notifications, on the lock screen, on Bluetooth headphones and in Android Auto. A call or a navigation prompt pauses it for you.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block car" id="car" aria-labelledby="car-title">
+    <div class="wrap">
+      <div>
+        <span class="label">New in 0.5 · Android Auto</span>
+        <h2 id="car-title">Your library, on the road.</h2>
+        <p class="intro">Plug in your phone and Halftone appears on the car's screen, with your covers, your playlists and your favourites. Built for glancing, not fiddling.</p>
+        <ul class="points">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#FF9A5C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"></rect><path d="M3 9h18M9 9v11"></path></svg>
+            <div><strong>Home, Playlists, Favourites, Library</strong>Recently played, new and most played albums, a shuffle button, your artists and your downloads, one tap away.</div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#E8457A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+            <div><strong>Just say it</strong>"Hey Google, play Fleetwood Mac on Halftone." It finds the artist, album or songs and starts playing. Search on the screen works too.</div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#7A5CFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+            <div><strong>Keeps playing without signal</strong>Lose reception in a tunnel or the countryside and Home switches to your downloads.</div></li>
+        </ul>
+        <p class="hint">Installed the APK yourself instead of through Google Play? In Android Auto's settings, tap Version ten times, then turn on <em>Unknown sources</em> under Developer settings.</p>
+      </div>
+      <div class="dash" role="img" aria-label="Halftone on an Android Auto screen, showing album covers on the Home tab and the song that's playing">
+        <div class="dash-screen">
+          <div class="dash-rail" aria-hidden="true"><span class="clock">9:41</span><i></i><i class="on"></i><i></i><i></i></div>
+          <div class="dash-main" aria-hidden="true">
+            <div class="dash-tabs"><span class="on">Home</span><span>Playlists</span><span>Favourites</span><span>Library</span></div>
+            <div>
+              <div class="dash-group">Recently played</div>
+              <div class="dash-grid"><div class="dash-tile t1"></div><div class="dash-tile t2"></div><div class="dash-tile t3"></div><div class="dash-tile t4"></div></div>
+            </div>
+            <div class="dash-now"><div class="art"></div><div class="txt"><b>Afterglow</b><span>The Night Ferries · Harbour Lights</span></div><div class="play"></div></div>
+          </div>
+        </div>
+        <div class="voice"><svg viewBox="0 0 24 24" fill="none" stroke="#FF9A5C" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>“Play Harbour Lights on Halftone”</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="why" aria-labelledby="why-title" style="background: var(--ink-2); border-block: 1px solid var(--line)">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">Why Halftone</span>
+          <h2 id="why-title">You built your own music server. Your player should be as good.</h2>
+        </div>
+        <p>Most Subsonic clients get the job done. Halftone is for people who also care how it feels to scroll through their library at night.</p>
+      </div>
+      <div class="why">
+        <article>
+          <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="16" cy="40" r="9" fill="#FF9A5C"></circle><circle cx="32" cy="28" r="6.5" fill="#E8457A"></circle><circle cx="44" cy="16" r="4" fill="#7A5CFF"></circle></svg>
+          <div>
+            <h3>Designed, not just functional</h3>
+            <p>Big covers, real typography, soft motion and a player that changes colour with your music. It is the reason this app exists.</p>
+          </div>
+        </article>
+        <article>
+          <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="8" y="10" width="40" height="14" rx="4" fill="none" stroke="#FF9A5C" stroke-width="3"></rect><rect x="8" y="32" width="40" height="14" rx="4" fill="none" stroke="#E8457A" stroke-width="3"></rect><circle cx="16" cy="17" r="2.5" fill="#FF9A5C"></circle><circle cx="16" cy="39" r="2.5" fill="#E8457A"></circle></svg>
+          <div>
+            <h3>Nothing in between</h3>
+            <p>Halftone connects only to your server. There is no Halftone account, no analytics and no ads. Your password stays on your phone and is sent as a salted token.</p>
+          </div>
+        </article>
+        <article>
+          <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M8 28c5-12 10-12 15 0s10 12 15 0 6-9 10-6" fill="none" stroke="#7A5CFF" stroke-width="3.5" stroke-linecap="round"></path></svg>
+          <div>
+            <h3>Respects your files</h3>
+            <p>Gapless playback, original-quality downloads and a quality switch for when you're on mobile data. Your FLACs stay FLACs.</p>
+          </div>
+        </article>
+        <article>
+          <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M14 22a14 14 0 0 1 26-4M42 34a14 14 0 0 1-26 4" fill="none" stroke="#FF9A5C" stroke-width="3.5" stroke-linecap="round"></path><path d="M40 10v8h-8M16 46v-8h8" fill="none" stroke="#E8457A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div>
+            <h3>Your server stays in charge</h3>
+            <p>Playlists, favourites and play counts live on the server, so the web interface, your desktop client and Halftone always agree.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="suggest" aria-labelledby="suggest-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">Suggestions &amp; features</span>
+          <h2 id="suggest-title">Tell us what Halftone should do next.</h2>
+        </div>
+        <p>Ideas and bug reports go to the project's public issue tracker, where everyone can read them, add a thumbs-up and follow progress.</p>
+      </div>
+      <div class="suggest-grid">
+        <form class="card" id="suggest-form" novalidate>
+          <fieldset>
+            <legend>What kind of suggestion?</legend>
+            <div class="kinds">
+              <input type="radio" name="kind" id="kind-feature" value="feature" checked><label for="kind-feature">New feature</label>
+              <input type="radio" name="kind" id="kind-improve" value="improvement"><label for="kind-improve">Improvement</label>
+              <input type="radio" name="kind" id="kind-bug" value="bug"><label for="kind-bug">Something's broken</label>
+            </div>
+          </fieldset>
+          <div>
+            <label class="field-label" for="s-title">In one line</label>
+            <input type="text" id="s-title" maxlength="120" placeholder="Example: show lyrics on the player screen" autocomplete="off">
+          </div>
+          <div>
+            <label class="field-label" for="s-body">Tell us more</label>
+            <textarea id="s-body" placeholder="What would you use it for? For a bug: what did you do, what happened, and which server and Android version do you use?"></textarea>
+            <p class="hint">Don't include your server address or password.</p>
+          </div>
+          <div class="form-foot">
+            <p class="form-note" id="form-note">Opens a ready-made issue on GitHub. You can check it before posting.</p>
+            <a class="btn btn-primary" id="s-send" href="#suggest" target="_blank" rel="noopener" aria-disabled="true">
+              Continue on GitHub
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+            </a>
+          </div>
+        </form>
+
+        <div class="ideas">
+          <h3>Already on the list</h3>
+          <p>Ideas we're looking at. Want one of these too? Start from it and tell us how you'd use it.</p>
+          <ul id="ideas"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block download" id="download" aria-labelledby="download-title">
+    <div class="wrap">
+      <div>
+        <span class="label">Download</span>
+        <h2 id="download-title" style="margin-top: 14px">Get Halftone on your phone and desktop.</h2>
+        <p>Install it, type your server address and sign in with your usual username and password. Your library appears straight away.</p>
+        <div class="cta-row" id="download-cta"></div>
+        <p class="linux-note">On Linux, install libmpv first, for example <code>sudo apt install libmpv2</code>, <code>sudo dnf install mpv-libs</code> or <code>sudo pacman -S mpv</code>. Then make the AppImage executable and start it. Java is included. Media keys work through MPRIS.</p>
+      </div>
+      <ul class="reqs">
+        <li><span>Android</span><span>8.0 Oreo or newer</span></li>
+        <li><span>In the car</span><span>Android Auto</span></li>
+        <li><span>Linux</span><span>x86_64 AppImage, with libmpv</span></li>
+        <li><span>Server</span><span>Navidrome, Gonic, Airsonic, Ampache…</span></li>
+        <li><span>Protocol</span><span>Subsonic API 1.16, token login</span></li>
+        <li><span>Connection</span><span>https, or http on your home network</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom: 24px">
+        <div>
+          <span class="label">Questions</span>
+          <h2 id="faq-title">Good to know</h2>
+        </div>
+      </div>
+      <div class="faq">
+        <div>
+          <details>
+            <summary>Do I need my own server?</summary>
+            <p>Yes. Halftone plays music from a server you run yourself, such as Navidrome on a home server, NAS or VPS. It has no music catalogue of its own.</p>
+          </details>
+          <details>
+            <summary>Does it work without internet?</summary>
+            <p>Songs, albums and playlists you've downloaded play anywhere. If the app can't reach your server, it offers your downloads right away.</p>
+          </details>
+          <details>
+            <summary>Where is my password stored?</summary>
+            <p>Only on your own device. Each request to your server uses a salted hash instead of the password itself.</p>
+          </details>
+        </div>
+        <div>
+          <details>
+            <summary>Why does every screen look different?</summary>
+            <p>Halftone reads the colours of the cover that's playing and builds the theme from them, with checks so text always stays readable.</p>
+          </details>
+          <details>
+            <summary>Will my plays show up on Last.fm?</summary>
+            <p>Halftone reports plays to your server. Connect Last.fm or ListenBrainz in Navidrome and it forwards them for you. You can turn scrobbling off in Settings.</p>
+          </details>
+          <details>
+            <summary>Does it work with Android Auto?</summary>
+            <p>Yes. Browse your home screen, playlists, favourites, artists and downloads on the car's screen, search, or just say "Hey Google, play … on Halftone". Installed the APK yourself? Turn on <em>Unknown sources</em> in Android Auto's developer settings first.</p>
+          </details>
+          <details>
+            <summary>Is there a desktop version?</summary>
+            <p>Yes, for Linux. It has a sidebar, a player bar and a queue panel, gapless playback through libmpv, and works with your media keys and the GNOME or KDE media controls. Windows and macOS aren't available yet.</p>
+          </details>
+          <details>
+            <summary>Is there an iPhone version?</summary>
+            <p>Not right now. Halftone runs on Android and Linux. Suggest it above if you'd use it.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Halftone · free and open source under the <a href="https://github.com/shadowfaxnl/Halftone/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0</a> · <a href="https://github.com/shadowfaxnl/Halftone" target="_blank" rel="noopener">Source on GitHub</a></span>
+    <span>Navidrome and Subsonic are projects of their own; Halftone is not affiliated with them. · <button type="button" class="linklike" data-consent-settings>Cookie settings</button></span>
+  </div>
+</footer>
+
+<section class="consent" id="consent" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-text" hidden>
+  <h2 id="consent-title">Can we count your visit?</h2>
+  <p id="consent-text">We'd like to use Google Analytics to see how many people visit this site and which parts they read. Nothing is used for ads. The Halftone app itself never collects analytics.</p>
+  <div class="row">
+    <button type="button" id="consent-no">No thanks</button>
+    <button type="button" id="consent-yes">Allow</button>
+  </div>
+</section>
+
+<script>
+// Google Analytics laadt pas na toestemming (AVG). Zonder keuze of bij "No thanks" wordt er niets geladen.
+(() => {
+  const GA_ID = "G-MYJ6QV4N3S";
+  const KEY = "halftone-analytics";
+  const banner = document.getElementById("consent");
+  let loaded = false;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID, { anonymize_ip: true });
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(s);
+  }
+  function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function clearCookies() {
+    document.cookie.split(";").map((c) => c.split("=")[0].trim())
+      .filter((n) => n === "_ga" || n.startsWith("_ga_"))
+      .forEach((n) => {
+        const host = location.hostname;
+        [host, "." + host, "." + host.split(".").slice(-2).join(".")].forEach((d) => {
+          document.cookie = n + "=; Max-Age=0; path=/; domain=" + d;
+        });
+        document.cookie = n + "=; Max-Age=0; path=/";
+      });
+  }
+
+  // Kleine helper voor de rest van de pagina: telt alleen als er toestemming is.
+  window.htTrack = (name, params) => { if (loaded) window.gtag("event", name, params || {}); };
+
+  document.getElementById("consent-yes").addEventListener("click", () => {
+    save("granted"); banner.hidden = true; load();
+  });
+  document.getElementById("consent-no").addEventListener("click", () => {
+    const wasOn = loaded;
+    save("denied"); banner.hidden = true;
+    if (wasOn) { clearCookies(); location.reload(); }
+  });
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-consent-settings]")) banner.hidden = false;
+  });
+
+  const choice = read();
+  if (choice === "granted") load();
+  else if (choice !== "denied") banner.hidden = false;
+})();
+</script>
+
+<script>
+(() => {
+  // ── Fill these in when the links exist ──────────────────────────
+  const CONFIG = {
+    playStoreUrl: "",        // e.g. "https://play.google.com/store/apps/details?id=app.halftone"
+    apkUrl: "https://github.com/shadowfaxnl/Halftone/releases/latest",
+    linuxUrl: "https://github.com/shadowfaxnl/Halftone/releases/latest",
+    githubRepo: "shadowfaxnl/Halftone"
+  };
+
+  const PALETTES = [
+    { name: "Ember", a: "#FF9A5C", b: "#E8457A", c: "#7A5CFF", back: "#3A1A2C", deep: "#140A12", on: "#1A0D08",
+      title: "Afterglow", artist: "The Night Ferries", album: "Harbour Lights" },
+    { name: "Tide", a: "#4FD1C5", b: "#1B6CA8", c: "#FFD39A", back: "#0F3240", deep: "#06141A", on: "#04201D",
+      title: "Low Tide", artist: "Marlo Vance", album: "Salt & Static" },
+    { name: "Brass", a: "#F6C177", b: "#EE8A4B", c: "#D4513B", back: "#3A2414", deep: "#140C08", on: "#241405",
+      title: "Copper Hour", artist: "Ines Okafor Trio", album: "Warm Room" },
+    { name: "Moss", a: "#A3E07A", b: "#3FA66B", c: "#1F5F5B", back: "#17301F", deep: "#08120B", on: "#0D1F07",
+      title: "Greenhouse", artist: "Pale Signal", album: "Chlorophyll" }
+  ];
+
+  const IDEAS = [
+    ["Home screen widget", "Cover, title and play controls without opening the app."],
+    ["Lyrics", "Synced lyrics on the player screen when your server has them."],
+    ["ReplayGain", "Even out the volume between albums and tracks."],
+    ["Remember the queue", "Pick up exactly where you left off after closing the app."]
+  ];
+
+  const root = document.documentElement;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ── colour helpers ──
+  const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const mix = (c1, c2, t) => {
+    const a = hex(c1), b = hex(c2);
+    return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(",")})`;
+  };
+  const ramp = (p, t) => (t < 0.55 ? mix(p.a, p.b, t / 0.55) : mix(p.b, p.c, (t - 0.55) / 0.45));
+
+  // Halftone screen at 45°: dot size and colour follow a diagonal from bottom-left to top-right.
+  function halftone(ctx, w, h, p, opts) {
+    const { step, rMax, rMin, bg, circle } = opts;
+    ctx.clearRect(0, 0, w, h);
+    if (bg) { ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h); }
+    const cx = w / 2, cy = h / 2, R = Math.min(w, h) / 2;
+    const span = Math.hypot(w, h);
+    const n = Math.ceil(span / step) + 2;
+    const c = Math.SQRT1_2;
+    for (let i = -n; i <= n; i++) {
+      for (let j = -n; j <= n; j++) {
+        const u = i * step, v = j * step;
+        const x = cx + (u - v) * c, y = cy + (u + v) * c;
+        if (x < -rMax || y < -rMax || x > w + rMax || y > h + rMax) continue;
+        if (circle && Math.hypot(x - cx, y - cy) > R * circle) continue;
+        let t = ((x - cx) - (y - cy)) / (w + h) + 0.5;
+        t = Math.max(0, Math.min(1, t));
+        const r = rMax + (rMin - rMax) * t;
+        ctx.fillStyle = ramp(p, t);
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+  }
+
+  // ── logo dots (same mark as the app icon) ──
+  (function drawLogo() {
+    const g = document.getElementById("logo-dots");
+    const P = PALETTES[0], ns = "http://www.w3.org/2000/svg";
+    const step = 6.6, R = 32, cx = 54, cy = 54, c = Math.SQRT1_2;
+    for (let i = -8; i <= 8; i++) for (let j = -8; j <= 8; j++) {
+      const u = i * step, v = j * step;
+      const x = cx + (u - v) * c, y = cy + (u + v) * c;
+      if (Math.hypot(x - cx, y - cy) > R - 1.2) continue;
+      let t = ((x - cx) - (y - cy)) / (2 * R * 0.95) + 0.5;
+      t = Math.max(0, Math.min(1, t));
+      const el = document.createElementNS(ns, "circle");
+      el.setAttribute("cx", x.toFixed(1)); el.setAttribute("cy", y.toFixed(1));
+      el.setAttribute("r", (3.3 + (0.85 - 3.3) * t).toFixed(2));
+      el.setAttribute("fill", ramp(P, t));
+      g.appendChild(el);
+    }
+  })();
+
+  // ── hero dot field & cover ──
+  const field = document.getElementById("dotfield");
+  const cover = document.getElementById("cover");
+  let current = PALETTES[0];
+
+  function drawField() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = field.clientWidth, h = field.clientHeight;
+    if (!w || !h) return;
+    field.width = w * dpr; field.height = h * dpr;
+    const ctx = field.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // fade the field out towards the text on the left
+    halftone(ctx, w, h, current, { step: 22, rMax: 6.5, rMin: 0.8 });
+    ctx.globalCompositeOperation = "destination-in";
+    const g = ctx.createLinearGradient(0, 0, w, 0);
+    g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(0.45, "rgba(0,0,0,0.25)"); g.addColorStop(1, "rgba(0,0,0,1)");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  function drawCover(canvas, p, small) {
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+    halftone(ctx, w, h, p, small
+      ? { step: w / 6.5, rMax: w / 13, rMin: w / 50, bg: p.deep }
+      : { step: w / 15, rMax: w / 30, rMin: w / 140, bg: p.deep });
+  }
+
+  function apply(p) {
+    current = p;
+    root.style.setProperty("--live", p.a);
+    root.style.setProperty("--live-2", p.b);
+    root.style.setProperty("--live-back", p.back);
+    root.style.setProperty("--live-deep", p.deep);
+    root.style.setProperty("--on-live", p.on);
+    document.getElementById("demo-title").textContent = p.title;
+    document.getElementById("demo-artist").textContent = p.artist;
+    document.getElementById("demo-album").textContent = p.album;
+    drawCover(cover, p, false);
+    drawField();
+    document.querySelectorAll(".swatch").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.name === p.name)));
+  }
+
+  const row = document.getElementById("swatch-row");
+  PALETTES.forEach((p) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "swatch"; b.dataset.name = p.name;
+    b.setAttribute("aria-label", `${p.album} by ${p.artist}`);
+    b.setAttribute("aria-pressed", "false");
+    const c = document.createElement("canvas"); c.width = 96; c.height = 96;
+    b.appendChild(c); row.appendChild(b);
+    drawCover(c, p, true);
+    b.addEventListener("click", () => apply(p));
+  });
+
+  apply(PALETTES[0]);
+  if ("ResizeObserver" in window) new ResizeObserver(() => drawField()).observe(field);
+  else window.addEventListener("resize", drawField);
+
+  // Gently move through the covers until someone picks one themselves.
+  let auto = reduce ? null : setInterval(() => {
+    const i = (PALETTES.indexOf(current) + 1) % PALETTES.length;
+    apply(PALETTES[i]);
+  }, 5200);
+  row.addEventListener("click", () => { if (auto) { clearInterval(auto); auto = null; } });
+
+  // ── download buttons ──
+  const playIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 5 3.5z"></path></svg>';
+  const linuxIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4M7 8l2.5 2L7 12M11.5 12H15"></path></svg>';
+  const dlIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>';
+
+  function fillCtas(el) {
+    el.textContent = "";
+    if (CONFIG.playStoreUrl) {
+      const a = document.createElement("a");
+      a.className = "btn btn-primary"; a.href = CONFIG.playStoreUrl; a.target = "_blank"; a.rel = "noopener";
+      a.addEventListener("click", () => window.htTrack && window.htTrack("download_click", { channel: "google_play" }));
+      a.innerHTML = playIcon + "<span><small>Get it on</small>Google Play</span>";
+      el.appendChild(a);
+    } else {
+      const s = document.createElement("span");
+      s.className = "btn"; s.setAttribute("aria-disabled", "true");
+      s.innerHTML = playIcon + "<span><small>Coming soon</small>Google Play</span>";
+      el.appendChild(s);
+    }
+    if (CONFIG.apkUrl) {
+      const a = document.createElement("a");
+      a.className = "btn btn-ghost"; a.href = CONFIG.apkUrl; a.target = "_blank"; a.rel = "noopener";
+      a.addEventListener("click", () => window.htTrack && window.htTrack("download_click", { channel: "apk" }));
+      a.innerHTML = dlIcon + "<span><small>Direct</small>Download APK</span>";
+      el.appendChild(a);
+    }
+    if (CONFIG.linuxUrl) {
+      const a = document.createElement("a");
+      a.className = "btn btn-ghost"; a.href = CONFIG.linuxUrl; a.target = "_blank"; a.rel = "noopener";
+      a.addEventListener("click", () => window.htTrack && window.htTrack("download_click", { channel: "linux_appimage" }));
+      a.innerHTML = linuxIcon + "<span><small>Linux · AppImage</small>Download for Linux</span>";
+      el.appendChild(a);
+    }
+  }
+  fillCtas(document.getElementById("hero-cta"));
+  fillCtas(document.getElementById("download-cta"));
+
+  // ── suggestions → prefilled GitHub issue ──
+  const titleEl = document.getElementById("s-title");
+  const bodyEl = document.getElementById("s-body");
+  const send = document.getElementById("s-send");
+  const note = document.getElementById("form-note");
+  const KIND_LABEL = { feature: "enhancement", improvement: "enhancement", bug: "bug" };
+  const KIND_PREFIX = { feature: "Feature", improvement: "Improvement", bug: "Bug" };
+
+  function kind() { return document.querySelector('input[name="kind"]:checked').value; }
+
+  function update() {
+    const t = titleEl.value.trim();
+    if (!CONFIG.githubRepo) {
+      send.setAttribute("aria-disabled", "true");
+      send.href = "#suggest";
+      note.textContent = "Suggestions open as soon as the project's issue tracker is online.";
+      return;
+    }
+    if (!t) {
+      send.setAttribute("aria-disabled", "true");
+      send.href = "#suggest";
+      return;
+    }
+    const k = kind();
+    const body = (bodyEl.value.trim() || "_No details given._") + "\n\n---\nSent from the Halftone website.";
+    const params = new URLSearchParams({ title: `${KIND_PREFIX[k]}: ${t}`, body, labels: KIND_LABEL[k] });
+    send.href = `https://github.com/${CONFIG.githubRepo}/issues/new?${params.toString()}`;
+    send.setAttribute("aria-disabled", "false");
+  }
+  [titleEl, bodyEl].forEach((el) => el.addEventListener("input", update));
+  send.addEventListener("click", () => { if (send.getAttribute("aria-disabled") !== "true" && window.htTrack) window.htTrack("suggestion_open", { kind: kind() }); });
+  document.querySelectorAll('input[name="kind"]').forEach((el) => el.addEventListener("change", update));
+  document.getElementById("suggest-form").addEventListener("submit", (e) => e.preventDefault());
+  update();
+
+  // ── ideas list ──
+  const list = document.getElementById("ideas");
+  IDEAS.forEach(([name, text]) => {
+    const li = document.createElement("li");
+    const b = document.createElement("b"); b.textContent = name;
+    const s = document.createElement("span"); s.textContent = text;
+    const btn = document.createElement("button"); btn.type = "button"; btn.textContent = "I want this";
+    btn.setAttribute("aria-label", `Suggest ${name}`);
+    btn.addEventListener("click", () => {
+      document.getElementById("kind-feature").checked = true;
+      titleEl.value = name;
+      bodyEl.value = `${text}\n\nHow I'd use it: `;
+      update();
+      titleEl.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+      bodyEl.focus({ preventScroll: true });
+      bodyEl.setSelectionRange(bodyEl.value.length, bodyEl.value.length);
+    });
+    li.append(b, s, btn);
+    list.appendChild(li);
+  });
+})();
+</script>
+</body>
+</html>

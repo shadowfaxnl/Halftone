@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.net.URI
 
 plugins {
     alias(libs.plugins.android.application)
@@ -103,9 +104,7 @@ val fetchBrandFonts by tasks.registering {
             if (target.exists() && target.length() > 10_000) return@forEach
             val ok = urls.any { url ->
                 runCatching {
-                    java.net.URI(url).toURL().openStream().use { input ->
-                        target.outputStream().use { input.copyTo(it) }
-                    }
+                    target.writeBytes(URI(url).toURL().readBytes())
                     target.length() > 10_000
                 }.getOrDefault(false)
             }

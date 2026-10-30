@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12 en nieuwer: inloggegevens en downloads gaan niet mee in de back-up of bij overzetten. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="datastore/halftone_settings.preferences_pb" />
+        <exclude domain="file" path="downloads/" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="datastore/halftone_settings.preferences_pb" />
+        <exclude domain="file" path="downloads/" />
+    </device-transfer>
+</data-extraction-rules>

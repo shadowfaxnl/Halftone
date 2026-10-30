@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 11 en ouder: inloggegevens en downloads gaan niet mee in de back-up. -->
+<full-backup-content>
+    <exclude domain="file" path="datastore/halftone_settings.preferences_pb" />
+    <exclude domain="file" path="downloads/" />
+</full-backup-content>

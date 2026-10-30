@@ -24,10 +24,12 @@ import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +37,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -93,6 +96,8 @@ import coil3.compose.AsyncImage
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 @Composable
 fun NowPlayingScreen(
@@ -155,13 +160,9 @@ fun NowPlayingScreen(
                 ),
         )
 
-        Column(
-            Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
-                .navigationBarsPadding()
-                .padding(horizontal = 24.dp),
-        ) {
+        // Breder dan hoog (tablet of telefoon in landschap): hoesje links, bediening rechts.
+        // Anders de vertrouwde kolom. Het hoesje past zich in beide gevallen aan de ruimte aan.
+        val topBar: @Composable () -> Unit = {
             // Bovenbalk
             Row(
                 Modifier
@@ -170,7 +171,7 @@ fun NowPlayingScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = onClose) {
-                    Icon(Icons.Rounded.KeyboardArrowDown, "Sluiten", modifier = Modifier.size(32.dp))
+                    Icon(Icons.Rounded.KeyboardArrowDown, stringResource(R.string.close), tint = Color.White, modifier = Modifier.size(32.dp))
                 }
                 Column(
                     Modifier
@@ -179,28 +180,28 @@ fun NowPlayingScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        "SPEELT UIT",
+                        stringResource(R.string.playing_from),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.White.copy(alpha = 0.6f),
                     )
                     Text(
                         item.album,
                         style = MaterialTheme.typography.titleSmall,
+                        color = Color.White,
                         maxLines = 1,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.basicMarquee(),
                     )
                 }
                 IconButton(onClick = { container.openAddToPlaylist(listOf(item.toSong())) }) {
-                    Icon(Icons.AutoMirrored.Rounded.PlaylistAdd, "Aan afspeellijst toevoegen")
+                    Icon(Icons.AutoMirrored.Rounded.PlaylistAdd, stringResource(R.string.add_to_playlist), tint = Color.White)
                 }
                 IconButton(onClick = { showQueue = true }) {
-                    Icon(Icons.AutoMirrored.Rounded.QueueMusic, "Wachtrij")
+                    Icon(Icons.AutoMirrored.Rounded.QueueMusic, stringResource(R.string.queue), tint = Color.White)
                 }
             }
-
-            Spacer(Modifier.weight(1f))
-
+        }
+        val cover: @Composable () -> Unit = {
             SwipeableCover(
                 coverArt = item.coverArt,
                 isPlaying = state.isPlaying,
@@ -208,63 +209,115 @@ fun NowPlayingScreen(
                 onNext = player::next,
                 onPrevious = player::previous,
             )
-
-            Spacer(Modifier.weight(1f))
-
-            // Titel en artiest, met het hartje ernaast
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                AnimatedContent(
-                    targetState = item,
-                    contentKey = { it.mediaId },
-                    transitionSpec = { fadeIn(tween(300)) togetherWith fadeOut(tween(200)) },
-                    label = "title",
-                    modifier = Modifier.weight(1f),
-                ) { current ->
-                    Column(Modifier.fillMaxWidth()) {
-                        Text(
-                            current.title,
-                            style = MaterialTheme.typography.headlineSmall,
-                            maxLines = 1,
-                            modifier = Modifier.basicMarquee(),
-                        )
-                        Text(
-                            current.artist,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.White.copy(alpha = 0.7f),
-                            maxLines = 1,
-                            modifier = Modifier
-                                .basicMarquee()
-                                .clickable(enabled = current.artistId != null) {
-                                    current.artistId?.let(onOpenArtist)
-                                },
-                        )
+        }
+        val details: @Composable () -> Unit = {
+            Column {
+                // Titel en artiest, met het hartje ernaast
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AnimatedContent(
+                        targetState = item,
+                        contentKey = { it.mediaId },
+                        transitionSpec = { fadeIn(tween(300)) togetherWith fadeOut(tween(200)) },
+                        label = "title",
+                        modifier = Modifier.weight(1f),
+                    ) { current ->
+                        Column(Modifier.fillMaxWidth()) {
+                            Text(
+                                current.title,
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = Color.White,
+                                maxLines = 1,
+                                modifier = Modifier.basicMarquee(),
+                            )
+                            Text(
+                                current.artist,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Color.White.copy(alpha = 0.7f),
+                                maxLines = 1,
+                                modifier = Modifier
+                                    .basicMarquee()
+                                    .clickable(enabled = current.artistId != null) {
+                                        current.artistId?.let(onOpenArtist)
+                                    },
+                            )
+                        }
                     }
+                    HeartButton(
+                        starred = item.mediaId in starred,
+                        onToggle = { container.favorites.toggle(item.mediaId, StarKind.Song) },
+                        tint = colors.accent,
+                        size = 28.dp,
+                    )
                 }
-                HeartButton(
-                    starred = item.mediaId in starred,
-                    onToggle = { container.favorites.toggle(item.mediaId, StarKind.Song) },
-                    tint = colors.accent,
-                    size = 28.dp,
+
+                Spacer(Modifier.height(20.dp))
+                SeekBar(player.position, state.durationMs, onSeek = player::seekTo)
+                Spacer(Modifier.height(12.dp))
+
+                Controls(
+                    isPlaying = state.isPlaying,
+                    isBuffering = state.isBuffering,
+                    shuffle = state.shuffle,
+                    repeatMode = state.repeatMode,
+                    accent = colors.accent,
+                    onToggle = player::togglePlay,
+                    onNext = player::next,
+                    onPrevious = player::previous,
+                    onShuffle = player::toggleShuffle,
+                    onRepeat = player::cycleRepeat,
                 )
             }
+        }
 
-            Spacer(Modifier.height(20.dp))
-            SeekBar(player.position, state.durationMs, onSeek = player::seekTo)
-            Spacer(Modifier.height(12.dp))
-
-            Controls(
-                isPlaying = state.isPlaying,
-                isBuffering = state.isBuffering,
-                shuffle = state.shuffle,
-                repeatMode = state.repeatMode,
-                accent = colors.accent,
-                onToggle = player::togglePlay,
-                onNext = player::next,
-                onPrevious = player::previous,
-                onShuffle = player::toggleShuffle,
-                onRepeat = player::cycleRepeat,
-            )
-            Spacer(Modifier.height(40.dp))
+        BoxWithConstraints(
+            Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding(),
+        ) {
+            if (maxWidth > maxHeight) {
+                Row(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 32.dp, vertical = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(40.dp),
+                ) {
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        contentAlignment = Alignment.Center,
+                    ) { cover() }
+                    Column(
+                        Modifier
+                            .weight(1f)
+                            .widthIn(max = 520.dp),
+                    ) {
+                        topBar()
+                        Spacer(Modifier.height(24.dp))
+                        details()
+                    }
+                }
+            } else {
+                Column(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    topBar()
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(vertical = 20.dp),
+                        contentAlignment = Alignment.Center,
+                    ) { cover() }
+                    Column(Modifier.widthIn(max = 560.dp)) { details() }
+                    Spacer(Modifier.height(40.dp))
+                }
+            }
         }
 
         if (showQueue) {
@@ -298,8 +351,8 @@ private fun SwipeableCover(
 
     Box(
         Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
+            .widthIn(max = 560.dp)
+            .aspectRatio(1f, matchHeightConstraintsFirst = true)
             .scale(scale)
             .graphicsLayer {
                 translationX = offset.value
@@ -407,8 +460,8 @@ private fun Controls(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ToggleIcon(Icons.Rounded.Shuffle, "Shuffle", active = shuffle, accent = accent, onClick = onShuffle)
-        BigIcon(Icons.Rounded.SkipPrevious, "Vorige", onPrevious)
+        ToggleIcon(Icons.Rounded.Shuffle, stringResource(R.string.shuffle), active = shuffle, accent = accent, onClick = onShuffle)
+        BigIcon(Icons.Rounded.SkipPrevious, stringResource(R.string.previous), onPrevious)
 
         // De grote afspeelknop, in de kleur van het hoesje.
         val interaction = remember { MutableInteractionSource() }
@@ -428,7 +481,7 @@ private fun Controls(
                 ) { playing ->
                     Icon(
                         if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
-                        contentDescription = if (playing) "Pauzeren" else "Afspelen",
+                        contentDescription = stringResource(if (playing) R.string.pause else R.string.play),
                         tint = Color.Black,
                         modifier = Modifier.size(42.dp),
                     )
@@ -443,10 +496,10 @@ private fun Controls(
             }
         }
 
-        BigIcon(Icons.Rounded.SkipNext, "Volgende", onNext)
+        BigIcon(Icons.Rounded.SkipNext, stringResource(R.string.next), onNext)
         ToggleIcon(
             if (repeatMode == Player.REPEAT_MODE_ONE) Icons.Rounded.RepeatOne else Icons.Rounded.Repeat,
-            "Herhalen",
+            stringResource(R.string.repeat),
             active = repeatMode != Player.REPEAT_MODE_OFF,
             accent = accent,
             onClick = onRepeat,

@@ -35,7 +35,7 @@ class HalftoneDownloadService : DownloadService(
         notMetRequirements: Int,
     ): Notification {
         val active = downloads.count { it.state == Download.STATE_DOWNLOADING || it.state == Download.STATE_QUEUED }
-        val message = if (active == 1) "1 nummer wordt gedownload" else "$active nummers worden gedownload"
+        val message = resources.getQuantityString(R.plurals.downloading_songs, active, active)
         return notifications.buildProgressNotification(
             this,
             R.drawable.ic_stat_download,

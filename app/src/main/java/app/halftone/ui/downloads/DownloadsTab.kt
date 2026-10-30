@@ -37,6 +37,9 @@ import app.halftone.ui.common.formatBytes
 import app.halftone.ui.common.songMenu
 import app.halftone.ui.favorites.SmallAction
 import app.halftone.ui.theme.MistDim
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
 
 /** Losse pagina, bereikbaar vanaf het foutscherm als je offline bent. */
 @Composable
@@ -44,7 +47,7 @@ fun DownloadsScreen(navigator: Navigator, padding: PaddingValues) {
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
             Text(
-                "Downloads",
+                stringResource(R.string.downloads),
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier
                     .statusBarsPadding()
@@ -87,8 +90,8 @@ fun DownloadsTab(navigator: Navigator, padding: PaddingValues) {
     if (songs.isEmpty()) {
         EmptyView(
             Icons.Rounded.DownloadForOffline,
-            "Nog niets offline",
-            "Tik op het downloadicoon bij een album of afspeellijst, of kies Downloaden in het menu van een nummer.",
+            stringResource(R.string.downloads_empty_title),
+            stringResource(R.string.downloads_empty_text),
         )
         return
     }
@@ -106,22 +109,27 @@ fun DownloadsTab(navigator: Navigator, padding: PaddingValues) {
             ) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        if (ready.size == 1) "1 nummer offline" else "${ready.size} nummers offline",
+                        pluralStringResource(R.plurals.songs_offline, ready.size, ready.size),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
-                        buildString {
-                            append(formatBytes(bytes))
-                            if (activeCount > 0) append("  ·  nog $activeCount bezig")
+                        if (activeCount > 0) {
+                            stringResource(
+                                R.string.separator_dot,
+                                formatBytes(bytes),
+                                stringResource(R.string.downloads_in_progress, activeCount),
+                            )
+                        } else {
+                            formatBytes(bytes)
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MistDim,
                     )
                 }
                 if (ready.isNotEmpty()) {
-                    SmallAction(Icons.Rounded.PlayArrow, "Afspelen") { container.player.playSongs(ready) }
+                    SmallAction(Icons.Rounded.PlayArrow, stringResource(R.string.play)) { container.player.playSongs(ready) }
                     Spacer(Modifier.width(8.dp))
-                    SmallAction(Icons.Rounded.Shuffle, "Shuffle") { container.player.playSongs(ready.shuffled()) }
+                    SmallAction(Icons.Rounded.Shuffle, stringResource(R.string.shuffle)) { container.player.playSongs(ready.shuffled()) }
                 }
             }
         }

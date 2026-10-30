@@ -33,7 +33,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-const val APP_VERSION = "0.4.1"
+const val APP_VERSION = "0.5.0"
 
 /** De schermen van de app. */
 sealed interface Screen {

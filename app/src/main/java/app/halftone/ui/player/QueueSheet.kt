@@ -38,6 +38,9 @@ import app.halftone.ui.common.EqualizerBars
 import app.halftone.ui.theme.Ink2
 import app.halftone.ui.theme.MistDim
 import app.halftone.ui.theme.MistFaint
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,10 +65,10 @@ fun QueueSheet(
                 Modifier.padding(start = 24.dp, end = 24.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.Bottom,
             ) {
-                Text("Wachtrij", style = MaterialTheme.typography.headlineSmall)
+                Text(stringResource(R.string.queue), style = MaterialTheme.typography.headlineSmall)
                 Spacer(Modifier.width(10.dp))
                 Text(
-                    "${state.queue.size} nummers",
+                    pluralStringResource(R.plurals.songs_count, state.queue.size, state.queue.size),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MistFaint,
                     modifier = Modifier.padding(bottom = 3.dp),
@@ -111,7 +114,7 @@ fun QueueSheet(
                             }
                         } else {
                             IconButton(onClick = { onRemove(entry.windowIndex) }) {
-                                Icon(Icons.Rounded.Close, "Verwijderen", tint = MistFaint)
+                                Icon(Icons.Rounded.Close, stringResource(R.string.remove), tint = MistFaint)
                             }
                         }
                     }

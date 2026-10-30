@@ -45,6 +45,9 @@ import app.halftone.ui.common.formatTotal
 import app.halftone.ui.common.rememberGroupDownload
 import app.halftone.ui.common.songMenu
 import app.halftone.ui.theme.rememberCoverColors
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
 
 @Composable
 fun PlaylistScreen(playlistId: String, navigator: Navigator, padding: PaddingValues) {
@@ -89,8 +92,8 @@ private fun PlaylistContent(playlist: PlaylistWithSongs, navigator: Navigator, p
                     title = playlist.name,
                     subtitle = playlist.comment?.takeIf { it.isNotBlank() },
                     meta = listOfNotNull(
-                        playlist.owner?.let { "door $it" },
-                        if (songs.size == 1) "1 nummer" else "${songs.size} nummers",
+                        playlist.owner?.let { stringResource(R.string.by_owner, it) },
+                        pluralStringResource(R.plurals.songs_count, songs.size, songs.size),
                         formatTotal(playlist.duration),
                     ).joinToString("  ·  "),
                     colors = colors,
@@ -107,8 +110,8 @@ private fun PlaylistContent(playlist: PlaylistWithSongs, navigator: Navigator, p
                     )
                     OverflowMenu(
                         listOf(
-                            MenuAction("Naam wijzigen", Icons.Rounded.Edit) { renaming = true },
-                            MenuAction("Afspeellijst verwijderen", Icons.Rounded.Delete) { deleting = true },
+                            MenuAction(stringResource(R.string.rename), Icons.Rounded.Edit) { renaming = true },
+                            MenuAction(stringResource(R.string.delete_playlist), Icons.Rounded.Delete) { deleting = true },
                         ),
                         tint = Color.White.copy(alpha = 0.75f),
                     )
@@ -124,8 +127,8 @@ private fun PlaylistContent(playlist: PlaylistWithSongs, navigator: Navigator, p
                     ) {
                         EmptyView(
                             Icons.AutoMirrored.Rounded.QueueMusic,
-                            "Nog leeg",
-                            "Voeg nummers toe via het menu bij een nummer of album.",
+                            stringResource(R.string.playlist_empty_title),
+                            stringResource(R.string.playlist_empty_text),
                         )
                     }
                 }
@@ -145,7 +148,7 @@ private fun PlaylistContent(playlist: PlaylistWithSongs, navigator: Navigator, p
                         onOpenAlbum = navigator::album,
                         onOpenArtist = navigator::artist,
                         extra = listOf(
-                            MenuAction("Uit deze afspeellijst", Icons.Rounded.RemoveCircleOutline) {
+                            MenuAction(stringResource(R.string.remove_from_playlist), Icons.Rounded.RemoveCircleOutline) {
                                 container.launchSafely {
                                     container.repository.removeFromPlaylist(playlist.id, index)
                                 }
@@ -162,8 +165,8 @@ private fun PlaylistContent(playlist: PlaylistWithSongs, navigator: Navigator, p
 
     if (renaming) {
         PlaylistNameDialog(
-            title = "Naam wijzigen",
-            confirmLabel = "Opslaan",
+            title = stringResource(R.string.rename),
+            confirmLabel = stringResource(R.string.save),
             initial = playlist.name,
             onConfirm = { name ->
                 renaming = false
@@ -174,9 +177,9 @@ private fun PlaylistContent(playlist: PlaylistWithSongs, navigator: Navigator, p
     }
     if (deleting) {
         ConfirmDialog(
-            title = "“${playlist.name}” verwijderen?",
-            text = "De afspeellijst verdwijnt van je server. De nummers zelf blijven staan.",
-            confirmLabel = "Verwijderen",
+            title = stringResource(R.string.delete_playlist_title, playlist.name),
+            text = stringResource(R.string.delete_playlist_text),
+            confirmLabel = stringResource(R.string.remove),
             onConfirm = {
                 deleting = false
                 navigator.back()

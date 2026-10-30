@@ -65,6 +65,8 @@ import app.halftone.ui.theme.MistDim
 import app.halftone.ui.theme.rememberCoverColors
 import coil3.compose.AsyncImage
 import java.time.LocalTime
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,7 +83,7 @@ fun HomeScreen(navigator: Navigator, padding: PaddingValues) {
         LoadContent(
             state,
             onRetry = vm::reload,
-            errorAction = ErrorAction("Luister je downloads", navigator::downloads),
+            errorAction = ErrorAction(stringResource(R.string.listen_downloads), navigator::downloads),
         ) { data ->
             HomeContent(data, navigator, padding)
         }
@@ -104,13 +106,13 @@ private fun HomeContent(data: HomeData, navigator: Navigator, padding: PaddingVa
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 QuickAction(
-                    "Shuffle mix",
+                    stringResource(R.string.shuffle_mix),
                     Icons.Rounded.Shuffle,
                     Modifier.weight(1f),
                     onClick = container.actions::shuffleMix,
                 )
                 QuickAction(
-                    "Verras me",
+                    stringResource(R.string.surprise_me),
                     Icons.Rounded.AutoAwesome,
                     Modifier.weight(1f),
                     onClick = {
@@ -136,7 +138,7 @@ private fun HomeContent(data: HomeData, navigator: Navigator, padding: PaddingVa
             item(key = "playlists") {
                 Column {
                     Spacer(Modifier.height(20.dp))
-                    SectionHeader("Jouw afspeellijsten")
+                    SectionHeader(stringResource(R.string.your_playlists))
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -152,15 +154,15 @@ private fun HomeContent(data: HomeData, navigator: Navigator, padding: PaddingVa
                 }
             }
         }
-        albumShelf("Recent gespeeld", data.recent, navigator)
-        albumShelf("Nieuw toegevoegd", data.newest, navigator)
-        albumShelf("Vaak gedraaid", data.frequent, navigator)
-        albumShelf("Ontdek", data.discover, navigator)
+        albumShelf(R.string.recently_played, data.recent, navigator)
+        albumShelf(R.string.recently_added, data.newest, navigator)
+        albumShelf(R.string.most_played, data.frequent, navigator)
+        albumShelf(R.string.discover, data.discover, navigator)
     }
 }
 
 private fun androidx.compose.foundation.lazy.LazyListScope.albumShelf(
-    title: String,
+    title: Int,
     albums: List<Album>,
     navigator: Navigator,
 ) {
@@ -168,7 +170,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.albumShelf(
     item(key = "shelf-$title") {
         Column {
             Spacer(Modifier.height(20.dp))
-            SectionHeader(title)
+            SectionHeader(stringResource(title))
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 20.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -183,14 +185,15 @@ private fun androidx.compose.foundation.lazy.LazyListScope.albumShelf(
 
 @Composable
 private fun Header(onSettings: () -> Unit) {
-    val greeting = remember {
+    val greetingRes = remember {
         when (LocalTime.now().hour) {
-            in 5..11 -> "Goedemorgen"
-            in 12..17 -> "Goedemiddag"
-            in 18..23 -> "Goedenavond"
-            else -> "Goedenacht"
+            in 5..11 -> R.string.good_morning
+            in 12..17 -> R.string.good_afternoon
+            in 18..23 -> R.string.good_evening
+            else -> R.string.good_night
         }
     }
+    val greeting = stringResource(greetingRes)
 
     Row(
         Modifier
@@ -204,13 +207,13 @@ private fun Header(onSettings: () -> Unit) {
         Column(Modifier.weight(1f)) {
             Text(greeting, style = MaterialTheme.typography.headlineLarge)
             Text(
-                "Wat gaan we luisteren?",
+                stringResource(R.string.home_subtitle),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MistDim,
             )
         }
         IconButton(onClick = onSettings) {
-            Icon(Icons.Rounded.Settings, contentDescription = "Instellingen")
+            Icon(Icons.Rounded.Settings, contentDescription = stringResource(R.string.settings))
         }
     }
 }
@@ -290,7 +293,7 @@ private fun HeroCard(album: Album, onOpen: () -> Unit, onPlay: () -> Unit) {
             Spacer(Modifier.width(18.dp))
             Column(Modifier.weight(1f)) {
                 Text(
-                    "UITGELICHT",
+                    stringResource(R.string.featured),
                     style = MaterialTheme.typography.labelSmall,
                     color = colors.accent,
                 )
@@ -318,7 +321,7 @@ private fun HeroCard(album: Album, onOpen: () -> Unit, onPlay: () -> Unit) {
                         .clickable(onClick = onPlay),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(Icons.Rounded.PlayArrow, "Afspelen", tint = Color.Black, modifier = Modifier.size(28.dp))
+                    Icon(Icons.Rounded.PlayArrow, stringResource(R.string.play), tint = Color.Black, modifier = Modifier.size(28.dp))
                 }
             }
         }

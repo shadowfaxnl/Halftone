@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -71,6 +72,9 @@ import app.halftone.ui.theme.Ink2
 import app.halftone.ui.theme.MistDim
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
+import app.halftone.Str
 
 class LoginViewModel(private val container: AppContainer) : ViewModel() {
     var server by mutableStateOf("")
@@ -84,7 +88,7 @@ class LoginViewModel(private val container: AppContainer) : ViewModel() {
     fun submit() {
         if (busy) return
         if (server.isBlank() || username.isBlank() || password.isEmpty()) {
-            error = "Vul alle drie de velden in"
+            error = Str.get(R.string.login_fill_all)
             return
         }
         viewModelScope.launch {
@@ -134,6 +138,8 @@ fun LoginScreen() {
 
         Column(
             Modifier
+                .align(Alignment.TopCenter)
+                .widthIn(max = 480.dp) // op tablets niet over de hele breedte
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .statusBarsPadding()
@@ -150,7 +156,7 @@ fun LoginScreen() {
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Jouw eigen muziek, in elke tint.",
+                stringResource(R.string.tagline),
                 style = MaterialTheme.typography.titleMedium,
                 color = MistDim,
             )
@@ -160,8 +166,8 @@ fun LoginScreen() {
             LoginField(
                 value = vm.server,
                 onValueChange = { vm.server = it },
-                label = "Serveradres",
-                placeholder = "muziek.jouwdomein.nl",
+                label = stringResource(R.string.server_address),
+                placeholder = stringResource(R.string.server_placeholder),
                 icon = Icons.Rounded.Dns,
                 keyboardType = KeyboardType.Uri,
             )
@@ -169,14 +175,14 @@ fun LoginScreen() {
             LoginField(
                 value = vm.username,
                 onValueChange = { vm.username = it },
-                label = "Gebruikersnaam",
+                label = stringResource(R.string.username),
                 icon = Icons.Rounded.Person,
             )
             Spacer(Modifier.height(14.dp))
             LoginField(
                 value = vm.password,
                 onValueChange = { vm.password = it },
-                label = "Wachtwoord",
+                label = stringResource(R.string.password),
                 icon = Icons.Rounded.Lock,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
@@ -186,7 +192,7 @@ fun LoginScreen() {
                     IconButton(onClick = { showPassword = !showPassword }) {
                         Icon(
                             if (showPassword) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
-                            contentDescription = if (showPassword) "Verberg wachtwoord" else "Toon wachtwoord",
+                            contentDescription = stringResource(if (showPassword) R.string.hide_password else R.string.show_password),
                         )
                     }
                 },
@@ -236,14 +242,14 @@ fun LoginScreen() {
                             modifier = Modifier.size(24.dp),
                         )
                     } else {
-                        Text("Verbinden", style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(R.string.connect), style = MaterialTheme.typography.titleMedium)
                     }
                 }
             }
 
             Spacer(Modifier.height(20.dp))
             Text(
-                "Werkt met Navidrome, Airsonic, Gonic en elke andere Subsonic-server.",
+                stringResource(R.string.works_with),
                 style = MaterialTheme.typography.bodySmall,
                 color = MistDim,
             )

@@ -38,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import app.halftone.data.COVER_LARGE
 import app.halftone.ui.theme.CoverColors
 import app.halftone.ui.theme.MistDim
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 /** De zachte kleurgloed achter de kop van een album- of afspeellijstpagina. */
 @Composable
@@ -119,7 +121,7 @@ fun CollectionHeader(
             ) {
                 Icon(Icons.Rounded.PlayArrow, null)
                 Spacer(Modifier.width(8.dp))
-                Text("Afspelen", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.play), style = MaterialTheme.typography.titleSmall)
             }
             FilledTonalButton(
                 onClick = onShuffle,
@@ -133,7 +135,7 @@ fun CollectionHeader(
             ) {
                 Icon(Icons.Rounded.Shuffle, null)
                 Spacer(Modifier.width(8.dp))
-                Text("Shuffle", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.shuffle), style = MaterialTheme.typography.titleSmall)
             }
         }
         Spacer(Modifier.height(10.dp))

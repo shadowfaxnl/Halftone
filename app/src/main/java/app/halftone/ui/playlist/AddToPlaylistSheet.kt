@@ -46,6 +46,10 @@ import app.halftone.ui.common.appViewModel
 import app.halftone.ui.theme.Ink2
 import app.halftone.ui.theme.MistDim
 import app.halftone.ui.theme.MistFaint
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
+import app.halftone.Str
 
 /** Onderblad waarin je kiest aan welke afspeellijst je nummers toevoegt. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,20 +62,20 @@ fun AddToPlaylistSheet(songs: List<Song>, onDismiss: () -> Unit) {
     val state by vm.state.collectAsStateWithLifecycle()
     var creating by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val countLabel = if (songs.size == 1) "1 nummer" else "${songs.size} nummers"
+    val countLabel = pluralStringResource(R.plurals.songs_count, songs.size, songs.size)
 
     fun addTo(playlist: Playlist) {
         onDismiss()
         container.launchSafely {
             container.repository.addToPlaylist(playlist.id, songs.map { it.id })
-            container.toast("$countLabel toegevoegd aan ${playlist.name}")
+            container.toast(Str.get(R.string.added_to_playlist, countLabel, playlist.name))
         }
     }
 
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState, containerColor = Ink2) {
         Column(Modifier.padding(bottom = 24.dp)) {
             Text(
-                "Toevoegen aan afspeellijst",
+                stringResource(R.string.add_to_playlist_title),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(horizontal = 24.dp),
             )
@@ -83,7 +87,7 @@ fun AddToPlaylistSheet(songs: List<Song>, onDismiss: () -> Unit) {
             )
 
             SheetRow(
-                title = "Nieuwe afspeellijst",
+                title = stringResource(R.string.new_playlist),
                 subtitle = null,
                 onClick = { creating = true },
             ) {
@@ -115,7 +119,7 @@ fun AddToPlaylistSheet(songs: List<Song>, onDismiss: () -> Unit) {
                     items(s.data, key = { it.id }) { playlist ->
                         SheetRow(
                             title = playlist.name,
-                            subtitle = if (playlist.songCount == 1) "1 nummer" else "${playlist.songCount} nummers",
+                            subtitle = pluralStringResource(R.plurals.songs_count, playlist.songCount, playlist.songCount),
                             onClick = { addTo(playlist) },
                         ) {
                             CoverArt(
@@ -133,14 +137,14 @@ fun AddToPlaylistSheet(songs: List<Song>, onDismiss: () -> Unit) {
 
     if (creating) {
         PlaylistNameDialog(
-            title = "Nieuwe afspeellijst",
-            confirmLabel = "Maken",
+            title = stringResource(R.string.new_playlist),
+            confirmLabel = stringResource(R.string.create),
             onConfirm = { name ->
                 creating = false
                 onDismiss()
                 container.launchSafely {
                     container.repository.createPlaylist(name, songs.map { it.id })
-                    container.toast("Afspeellijst “$name” gemaakt")
+                    container.toast(Str.get(R.string.playlist_created, name))
                 }
             },
             onDismiss = { creating = false },

@@ -88,6 +88,10 @@ import app.halftone.ui.theme.Ink4
 import app.halftone.ui.theme.MistDim
 import app.halftone.ui.theme.MistFaint
 import coil3.compose.AsyncImage
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
+import app.halftone.Str
 
 // ───────────────────────── Hoesjes ─────────────────────────
 
@@ -188,7 +192,7 @@ fun PlaylistCard(playlist: Playlist, onClick: () -> Unit, modifier: Modifier = M
     MediaCard(
         coverArt = playlist.coverArt,
         title = playlist.name,
-        subtitle = if (playlist.songCount == 1) "1 nummer" else "${playlist.songCount} nummers",
+        subtitle = pluralStringResource(R.plurals.songs_count, playlist.songCount, playlist.songCount),
         onClick = onClick,
         modifier = modifier,
         placeholderIcon = Icons.AutoMirrored.Rounded.QueueMusic,
@@ -224,35 +228,35 @@ fun songMenu(
     val download = downloads[song.id]
 
     return buildList {
-        add(MenuAction("Speel hierna", Icons.AutoMirrored.Rounded.QueueMusic) {
+        add(MenuAction(stringResource(R.string.play_next), Icons.AutoMirrored.Rounded.QueueMusic) {
             container.player.playNext(song)
-            container.toast("Speelt hierna")
+            container.toast(Str.get(R.string.playing_next))
         })
-        add(MenuAction("Aan wachtrij toevoegen", Icons.AutoMirrored.Rounded.QueueMusic) {
+        add(MenuAction(stringResource(R.string.add_to_queue), Icons.AutoMirrored.Rounded.QueueMusic) {
             container.player.addToQueue(song)
-            container.toast("Toegevoegd aan wachtrij")
+            container.toast(Str.get(R.string.added_to_queue))
         })
-        add(MenuAction("Aan afspeellijst toevoegen", Icons.AutoMirrored.Rounded.PlaylistAdd) {
+        add(MenuAction(stringResource(R.string.add_to_playlist), Icons.AutoMirrored.Rounded.PlaylistAdd) {
             container.openAddToPlaylist(listOf(song))
         })
         add(
             MenuAction(
-                if (isStarred) "Uit favorieten" else "Aan favorieten toevoegen",
+                stringResource(if (isStarred) R.string.remove_from_favorites else R.string.add_to_favorites),
                 if (isStarred) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
             ) { container.favorites.toggle(song.id, StarKind.Song) },
         )
         if (download == null || download.isFailed) {
-            add(MenuAction("Downloaden", Icons.Rounded.Download) { container.downloads.download(listOf(song)) })
+            add(MenuAction(stringResource(R.string.download), Icons.Rounded.Download) { container.downloads.download(listOf(song)) })
         } else {
-            add(MenuAction("Download verwijderen", Icons.Rounded.Delete) { container.downloads.remove(listOf(song.id)) })
+            add(MenuAction(stringResource(R.string.remove_download), Icons.Rounded.Delete) { container.downloads.remove(listOf(song.id)) })
         }
         val albumId = song.albumId
         if (onOpenAlbum != null && albumId != null) {
-            add(MenuAction("Ga naar album", Icons.Rounded.Album) { onOpenAlbum(albumId) })
+            add(MenuAction(stringResource(R.string.go_to_album), Icons.Rounded.Album) { onOpenAlbum(albumId) })
         }
         val artistId = song.artistId
         if (onOpenArtist != null && artistId != null) {
-            add(MenuAction("Ga naar artiest", Icons.Rounded.Person) { onOpenArtist(artistId) })
+            add(MenuAction(stringResource(R.string.go_to_artist), Icons.Rounded.Person) { onOpenArtist(artistId) })
         }
         addAll(extra)
     }
@@ -326,12 +330,12 @@ private fun SongBadges(songId: String) {
     val download = downloads[songId]
 
     if (songId in starred) {
-        Icon(Icons.Rounded.Favorite, "Favoriet", tint = accent, modifier = Modifier.size(13.dp))
+        Icon(Icons.Rounded.Favorite, stringResource(R.string.favorite), tint = accent, modifier = Modifier.size(13.dp))
         Spacer(Modifier.width(5.dp))
     }
     when {
         download?.isDone == true -> {
-            Icon(Icons.Rounded.DownloadDone, "Gedownload", tint = accent, modifier = Modifier.size(14.dp))
+            Icon(Icons.Rounded.DownloadDone, stringResource(R.string.downloaded), tint = accent, modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(5.dp))
         }
         download?.isActive == true -> {
@@ -374,7 +378,7 @@ fun OverflowMenu(actions: List<MenuAction>, tint: Color = MistDim) {
     var open by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { open = true }) {
-            Icon(Icons.Rounded.MoreVert, contentDescription = "Meer", tint = tint)
+            Icon(Icons.Rounded.MoreVert, contentDescription = stringResource(R.string.more), tint = tint)
         }
         DropdownMenu(
             expanded = open,
@@ -454,7 +458,7 @@ fun HeartButton(
         ) { on ->
             Icon(
                 if (on) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
-                contentDescription = if (on) "Uit favorieten" else "Aan favorieten toevoegen",
+                contentDescription = stringResource(if (on) R.string.remove_from_favorites else R.string.add_to_favorites),
                 tint = if (on) tint else Color.White.copy(alpha = 0.75f),
                 modifier = Modifier
                     .size(size)
@@ -487,7 +491,7 @@ fun GroupDownloadButton(
     ) {
         when (state) {
             GroupDownloadState.Done ->
-                Icon(Icons.Rounded.DownloadDone, "Gedownload", tint = accent, modifier = Modifier.size(26.dp))
+                Icon(Icons.Rounded.DownloadDone, stringResource(R.string.downloaded), tint = accent, modifier = Modifier.size(26.dp))
             GroupDownloadState.Active ->
                 Box(contentAlignment = Alignment.Center) {
                     if (progress != null) {
@@ -503,16 +507,16 @@ fun GroupDownloadButton(
                     }
                 }
             GroupDownloadState.Partial ->
-                Icon(Icons.Rounded.Download, "Rest downloaden", tint = accent, modifier = Modifier.size(26.dp))
+                Icon(Icons.Rounded.Download, stringResource(R.string.download_rest), tint = accent, modifier = Modifier.size(26.dp))
             GroupDownloadState.None ->
-                Icon(Icons.Rounded.Download, "Downloaden", tint = Color.White.copy(alpha = 0.75f), modifier = Modifier.size(26.dp))
+                Icon(Icons.Rounded.Download, stringResource(R.string.download), tint = Color.White.copy(alpha = 0.75f), modifier = Modifier.size(26.dp))
         }
     }
     if (confirmRemove) {
         ConfirmDialog(
-            title = "Downloads verwijderen?",
-            text = "De nummers blijven op je server staan, maar zijn dan niet meer offline te beluisteren.",
-            confirmLabel = "Verwijderen",
+            title = stringResource(R.string.remove_downloads_title),
+            text = stringResource(R.string.remove_downloads_text),
+            confirmLabel = stringResource(R.string.remove),
             onConfirm = {
                 confirmRemove = false
                 onRemove()
@@ -539,7 +543,7 @@ fun ConfirmDialog(
                 Text(confirmLabel, color = MaterialTheme.colorScheme.error)
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Annuleren") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
         containerColor = Ink3,
         shape = MaterialTheme.shapes.large,
     )
@@ -603,7 +607,7 @@ fun GlassIconButton(
 
 @Composable
 fun BackButton(onBack: () -> Unit, modifier: Modifier = Modifier) {
-    GlassIconButton(Icons.AutoMirrored.Rounded.ArrowBack, "Terug", onBack, modifier)
+    GlassIconButton(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back), onBack, modifier)
 }
 
 /** Een extra knop op het foutscherm, bijvoorbeeld "Bekijk downloads" als je offline bent. */
@@ -661,7 +665,7 @@ fun ErrorView(
         Spacer(Modifier.height(16.dp))
         Text(message, style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
         Spacer(Modifier.height(20.dp))
-        FilledTonalButton(onClick = onRetry) { Text("Opnieuw proberen") }
+        FilledTonalButton(onClick = onRetry) { Text(stringResource(R.string.retry)) }
         if (action != null) {
             TextButton(onClick = action.onClick) { Text(action.label) }
         }

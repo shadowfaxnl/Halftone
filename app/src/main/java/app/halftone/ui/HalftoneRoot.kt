@@ -66,9 +66,12 @@ import app.halftone.ui.login.LoginScreen
 import app.halftone.ui.player.MiniPlayer
 import app.halftone.ui.player.NowPlayingScreen
 import app.halftone.ui.search.SearchScreen
+import app.halftone.ui.theme.Mist
 import app.halftone.ui.theme.Ink
 import app.halftone.ui.theme.HalftoneTheme
 import app.halftone.ui.theme.rememberCoverColors
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 @Composable
 fun HalftoneRoot() {
@@ -95,12 +98,12 @@ class Navigator(private val nav: NavHostController) {
     }
 }
 
-private data class Tab(val route: String, val label: String, val icon: ImageVector)
+private data class Tab(val route: String, val label: Int, val icon: ImageVector)
 
 private val tabs = listOf(
-    Tab("home", "Home", Icons.Rounded.Home),
-    Tab("library", "Bibliotheek", Icons.Rounded.LibraryMusic),
-    Tab("search", "Zoeken", Icons.Rounded.Search),
+    Tab("home", R.string.tab_home, Icons.Rounded.Home),
+    Tab("library", R.string.tab_library, Icons.Rounded.LibraryMusic),
+    Tab("search", R.string.tab_search, Icons.Rounded.Search),
 )
 
 @Composable
@@ -135,6 +138,7 @@ private fun MainScaffold() {
         ) {
             Scaffold(
                 containerColor = Color.Transparent,
+                contentColor = Mist,
                 contentWindowInsets = WindowInsets(0),
                 bottomBar = {
                     Column {
@@ -219,7 +223,7 @@ private fun BottomBar(navController: NavHostController) {
                     }
                 },
                 icon = { Icon(tab.icon, contentDescription = null) },
-                label = { Text(tab.label) },
+                label = { Text(stringResource(tab.label)) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
                     selectedTextColor = MaterialTheme.colorScheme.primary,

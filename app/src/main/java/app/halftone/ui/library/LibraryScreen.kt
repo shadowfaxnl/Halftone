@@ -61,15 +61,18 @@ import app.halftone.ui.playlist.PlaylistsTab
 import app.halftone.ui.theme.Ink
 import app.halftone.ui.theme.MistDim
 import app.halftone.ui.theme.MistFaint
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
 
-private enum class LibraryTab(val label: String) {
-    Playlists("Afspeellijsten"),
-    Favorites("Favorieten"),
-    Artists("Artiesten"),
-    Albums("Albums"),
-    Downloads("Downloads"),
+private enum class LibraryTab(val label: Int) {
+    Playlists(R.string.playlists),
+    Favorites(R.string.favorites),
+    Artists(R.string.artists),
+    Albums(R.string.albums),
+    Downloads(R.string.downloads),
 }
-private enum class AlbumSort(val label: String) { Name("A–Z"), Artist("Artiest"), Year("Jaar") }
+private enum class AlbumSort(val label: Int) { Name(R.string.sort_az), Artist(R.string.sort_artist), Year(R.string.sort_year) }
 
 @Composable
 fun LibraryScreen(navigator: Navigator, padding: PaddingValues) {
@@ -82,7 +85,7 @@ fun LibraryScreen(navigator: Navigator, padding: PaddingValues) {
                 .padding(top = 20.dp, bottom = 12.dp),
         ) {
             Text(
-                "Bibliotheek",
+                stringResource(R.string.library),
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(horizontal = 20.dp),
             )
@@ -132,7 +135,7 @@ private fun SegmentedTabs(selected: LibraryTab, onSelect: (LibraryTab) -> Unit) 
                     .clickable { onSelect(tab) }
                     .padding(horizontal = 18.dp, vertical = 10.dp),
             ) {
-                Text(tab.label, style = MaterialTheme.typography.labelLarge, color = fg)
+                Text(stringResource(tab.label), style = MaterialTheme.typography.labelLarge, color = fg)
             }
         }
     }
@@ -194,7 +197,7 @@ private fun ArtistRow(artist: Artist, onClick: () -> Unit) {
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                if (artist.albumCount == 1) "1 album" else "${artist.albumCount} albums",
+                pluralStringResource(R.plurals.albums_count, artist.albumCount, artist.albumCount),
                 style = MaterialTheme.typography.bodySmall,
                 color = MistFaint,
             )
@@ -227,7 +230,7 @@ private fun AlbumsTab(navigator: Navigator, padding: PaddingValues) {
                         FilterChip(
                             selected = sort == option,
                             onClick = { sort = option },
-                            label = { Text(option.label) },
+                            label = { Text(stringResource(option.label)) },
                             shape = RoundedCornerShape(50),
                             colors = FilterChipDefaults.filterChipColors(
                                 selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),

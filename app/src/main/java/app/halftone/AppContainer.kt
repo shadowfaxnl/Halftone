@@ -144,7 +144,7 @@ class AppContainer(private val context: Context) {
 
         private fun play(songs: List<Song>) {
             if (songs.isEmpty()) {
-                toast("Geen nummers gevonden")
+                toast(Str.get(R.string.no_songs_found))
             } else {
                 player.playSongs(songs)
             }

@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.concurrent.ConcurrentHashMap
+import app.halftone.R
+import app.halftone.Str
 
 data class HomeData(
     val hero: Album?,
@@ -75,12 +77,12 @@ class MusicRepository(private val client: SubsonicClient) {
 
     suspend fun artist(id: String): ArtistWithAlbums =
         client.call("getArtist", mapOf("id" to id)).artist
-            ?: throw SubsonicException(70, "Artiest niet gevonden")
+            ?: throw SubsonicException(70, Str.get(R.string.error_artist_not_found))
 
     suspend fun album(id: String): AlbumWithSongs {
         albumCache[id]?.let { return it }
         val album = client.call("getAlbum", mapOf("id" to id)).album
-            ?: throw SubsonicException(70, "Album niet gevonden")
+            ?: throw SubsonicException(70, Str.get(R.string.error_album_not_found))
         albumCache[id] = album
         return album
     }
@@ -101,6 +103,9 @@ class MusicRepository(private val client: SubsonicClient) {
             mapOf("query" to query, "artistCount" to 10, "albumCount" to 20, "songCount" to 40),
         ).searchResult3 ?: SearchResult()
 
+    suspend fun song(id: String): Song? =
+        client.call("getSong", mapOf("id" to id)).song
+
     suspend fun randomSongs(size: Int = 80): List<Song> =
         client.call("getRandomSongs", mapOf("size" to size)).randomSongs?.song.orEmpty()
 
@@ -111,7 +116,7 @@ class MusicRepository(private val client: SubsonicClient) {
 
     suspend fun playlist(id: String): PlaylistWithSongs =
         client.call("getPlaylist", mapOf("id" to id)).playlist
-            ?: throw SubsonicException(70, "Afspeellijst niet gevonden")
+            ?: throw SubsonicException(70, Str.get(R.string.error_playlist_not_found))
 
     suspend fun createPlaylist(name: String, songIds: List<String> = emptyList()) {
         client.call("createPlaylist", mapOf("name" to name, "songId" to songIds))

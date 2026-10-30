@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "app.halftone"
-version = "0.4.1"
+version = "0.5.0"
 
 dependencies {
     implementation(compose.desktop.currentOs)
@@ -47,7 +47,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.AppImage)
             packageName = "halftone"
-            packageVersion = "0.4.1"
+            packageVersion = "0.5.0"
             description = "Music player for Navidrome and Subsonic servers"
             vendor = "shadowfaxnl"
             licenseFile.set(rootProject.file("../LICENSE"))

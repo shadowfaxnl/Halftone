@@ -42,6 +42,11 @@ It is built with Kotlin, Jetpack Compose and Media3, and talks straight to your 
 - Background playback with controls in the notification, on the lock screen and on Bluetooth headsets. Audio focus is handled for calls and navigation prompts.
 - Mini player and a full-screen player: swipe the cover for next or previous, swipe down to close. Includes a queue you can jump around in and edit.
 
+**In the car**
+- **Android Auto**: tabs for Home, Playlists, Favourites and Library (artists and downloads), with covers. Tap a song and the whole album or playlist plays from there.
+- Search from the car screen, or say *"Hey Google, play Radiohead on Halftone"*. Halftone picks the matching artist, album or songs.
+- No signal? Home shows your downloads, so they keep playing.
+
 **Your server stays in charge**
 - **Playlists**: create, rename and delete them, add songs or whole albums, and remove tracks. Changes are saved on your server, so the Navidrome web UI and your other clients stay in sync.
 - **Favourites**: heart songs (including the one that's playing), albums and artists. Favourites have their own tab and show up as a small heart in every list.
@@ -126,6 +131,15 @@ packaging/build-appimage.sh          # AppImage in build/appimage
 
 The [Linux AppImage](.github/workflows/linux-appimage.yml) workflow builds the AppImage on every push to `desktop/`, and attaches it to the release when you push a tag such as `v0.4.0`.
 
+## Android Auto
+
+Halftone shows up in Android Auto by itself once it's installed. If you installed the APK yourself rather than from Google Play, Android Auto hides it until you allow unknown sources once:
+
+1. Open **Android Auto** settings on your phone (Settings › Connected devices › Android Auto, or the Android Auto app).
+2. Scroll down and tap **Version** ten times, then confirm to turn on developer mode.
+3. Open the menu (⋮) › **Developer settings** and turn on **Unknown sources**.
+4. Reconnect your phone to the car. To check it without a car, install the [Desktop Head Unit](https://developer.android.com/training/cars/testing/dhu) from Android Studio's SDK Manager.
+
 ## Signing in
 
 Enter the address you use to open Navidrome in your browser, for example `music.example.com` or `192.168.1.20:4533`. Without `http://` or `https://`, Halftone picks HTTP for local addresses and addresses with a port, and HTTPS for everything else. A path such as `/navidrome` is fine.
@@ -169,7 +183,6 @@ All text lives in Android string resources: English in `app/src/main/res/values/
 
 Ideas we're considering:
 
-- Android Auto
 - Home screen widget
 - Synced lyrics
 - ReplayGain

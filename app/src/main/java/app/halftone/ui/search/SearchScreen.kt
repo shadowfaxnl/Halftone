@@ -77,6 +77,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 sealed interface SearchUi {
     data object Idle : SearchUi
@@ -102,7 +104,7 @@ class SearchViewModel(private val repository: MusicRepository) : ViewModel() {
     val ui: StateFlow<SearchUi> = combine(settledQuery, retryTick) { q, _ -> q }
         .flatMapLatest { q ->
             if (q.length < 2) {
-                flowOf<SearchUi>(SearchUi.Idle)
+                flowOf(SearchUi.Idle)
             } else {
                 flow {
                     emit(SearchUi.Loading)
@@ -134,17 +136,17 @@ fun SearchScreen(navigator: Navigator, padding: PaddingValues) {
                 .statusBarsPadding()
                 .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 8.dp),
         ) {
-            Text("Zoeken", style = MaterialTheme.typography.headlineLarge)
+            Text(stringResource(R.string.search), style = MaterialTheme.typography.headlineLarge)
             Spacer(Modifier.height(16.dp))
             TextField(
                 value = query,
                 onValueChange = { vm.query.value = it },
-                placeholder = { Text("Artiesten, albums, nummers") },
+                placeholder = { Text(stringResource(R.string.search_hint)) },
                 leadingIcon = { Icon(Icons.Rounded.Search, null) },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
                         IconButton(onClick = { vm.query.value = "" }) {
-                            Icon(Icons.Rounded.Close, "Wissen")
+                            Icon(Icons.Rounded.Close, stringResource(R.string.clear))
                         }
                     }
                 },
@@ -170,12 +172,12 @@ fun SearchScreen(navigator: Navigator, padding: PaddingValues) {
             label = "search",
         ) { state ->
             when (state) {
-                SearchUi.Idle -> Hint("Zoek in je hele bibliotheek", Icons.Rounded.Search)
+                SearchUi.Idle -> Hint(stringResource(R.string.search_idle), Icons.Rounded.Search)
                 SearchUi.Loading -> LoadingView()
                 is SearchUi.Failed -> ErrorView(state.message, onRetry = vm::retry)
                 is SearchUi.Results ->
                     if (state.result.isEmpty) {
-                        Hint("Niets gevonden voor “${state.query}”", Icons.Rounded.TravelExplore)
+                        Hint(stringResource(R.string.search_none, state.query), Icons.Rounded.TravelExplore)
                     } else {
                         Results(state.result, navigator, padding)
                     }
@@ -212,7 +214,7 @@ private fun Results(result: SearchResult, navigator: Navigator, padding: Padding
         if (result.artist.isNotEmpty()) {
             item {
                 Column {
-                    SectionHeader("Artiesten")
+                    SectionHeader(stringResource(R.string.artists))
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(18.dp),
@@ -242,7 +244,7 @@ private fun Results(result: SearchResult, navigator: Navigator, padding: Padding
             item {
                 Column {
                     Spacer(Modifier.height(8.dp))
-                    SectionHeader("Albums")
+                    SectionHeader(stringResource(R.string.albums))
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -258,7 +260,7 @@ private fun Results(result: SearchResult, navigator: Navigator, padding: Padding
             item {
                 Column {
                     Spacer(Modifier.height(8.dp))
-                    SectionHeader("Nummers")
+                    SectionHeader(stringResource(R.string.songs))
                 }
             }
             itemsIndexed(result.song, key = { i, s -> "$i-${s.id}" }) { index, song ->

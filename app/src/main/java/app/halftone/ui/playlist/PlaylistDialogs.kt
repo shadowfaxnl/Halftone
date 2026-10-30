@@ -24,6 +24,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import app.halftone.ui.theme.Ink3
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 /** Vraagt om een naam, voor een nieuwe afspeellijst of om er een te hernoemen. */
 @Composable
@@ -47,7 +49,7 @@ fun PlaylistNameDialog(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                placeholder = { Text("Naam van de afspeellijst") },
+                placeholder = { Text(stringResource(R.string.playlist_name_hint)) },
                 singleLine = true,
                 shape = RoundedCornerShape(16.dp),
                 keyboardOptions = KeyboardOptions(
@@ -64,7 +66,7 @@ fun PlaylistNameDialog(
         confirmButton = {
             TextButton(onClick = { onConfirm(name.trim()) }, enabled = valid) { Text(confirmLabel) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Annuleren") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
         containerColor = Ink3,
         shape = MaterialTheme.shapes.large,
     )

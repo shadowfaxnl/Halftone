@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import app.halftone.R
+import app.halftone.Str
 
 val LocalAppContainer = staticCompositionLocalOf<AppContainer> {
     error("AppContainer ontbreekt")
@@ -116,5 +118,9 @@ fun formatBytes(bytes: Long): String = when {
 
 fun formatTotal(seconds: Int): String {
     val minutes = seconds / 60
-    return if (minutes >= 60) "${minutes / 60} u ${minutes % 60} min" else "$minutes min"
+    return if (minutes >= 60) {
+        Str.get(R.string.duration_h_min, minutes / 60, minutes % 60)
+    } else {
+        Str.get(R.string.duration_min, minutes)
+    }
 }

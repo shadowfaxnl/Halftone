@@ -42,6 +42,10 @@ import app.halftone.ui.common.rememberGroupDownload
 import app.halftone.ui.common.songMenu
 import app.halftone.ui.theme.MistFaint
 import app.halftone.ui.theme.rememberCoverColors
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
+import app.halftone.Str
 
 @Composable
 fun AlbumScreen(albumId: String, navigator: Navigator, padding: PaddingValues) {
@@ -86,7 +90,7 @@ private fun AlbumContent(album: AlbumWithSongs, navigator: Navigator, padding: P
                     meta = listOfNotNull(
                         album.year?.toString(),
                         album.genre,
-                        "${album.song.size} nummers",
+                        pluralStringResource(R.plurals.songs_count, album.song.size, album.song.size),
                         formatTotal(album.duration),
                     ).joinToString("  ·  "),
                     colors = colors,
@@ -107,15 +111,15 @@ private fun AlbumContent(album: AlbumWithSongs, navigator: Navigator, padding: P
                     IconButton(onClick = { container.openAddToPlaylist(album.song) }) {
                         Icon(
                             Icons.AutoMirrored.Rounded.PlaylistAdd,
-                            "Aan afspeellijst toevoegen",
+                            stringResource(R.string.add_to_playlist),
                             tint = Color.White.copy(alpha = 0.75f),
                         )
                     }
                     OverflowMenu(
                         listOf(
-                            MenuAction("Album aan wachtrij toevoegen", Icons.AutoMirrored.Rounded.QueueMusic) {
+                            MenuAction(stringResource(R.string.add_album_to_queue), Icons.AutoMirrored.Rounded.QueueMusic) {
                                 album.song.forEach(container.player::addToQueue)
-                                container.toast("Album toegevoegd aan wachtrij")
+                                container.toast(Str.get(R.string.album_added_to_queue))
                             },
                         ),
                         tint = Color.White.copy(alpha = 0.75f),
@@ -128,7 +132,7 @@ private fun AlbumContent(album: AlbumWithSongs, navigator: Navigator, padding: P
                     val previousDisc = album.song.getOrNull(index - 1)?.discNumber
                     if (multiDisc && song.discNumber != previousDisc) {
                         Text(
-                            "CD ${song.discNumber ?: 1}",
+                            stringResource(R.string.disc_n, song.discNumber ?: 1),
                             style = MaterialTheme.typography.labelSmall,
                             color = MistFaint,
                             modifier = Modifier.padding(start = 24.dp, top = 16.dp, bottom = 6.dp),

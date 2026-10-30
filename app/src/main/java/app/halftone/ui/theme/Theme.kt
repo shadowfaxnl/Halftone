@@ -3,11 +3,13 @@ package app.halftone.ui.theme
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -119,6 +121,9 @@ fun HalftoneTheme(
         colorScheme = scheme,
         typography = typography,
         shapes = HalftoneShapes,
-        content = content,
-    )
+    ) {
+        // Tekst en iconen zonder eigen kleur worden licht, ook buiten een Surface.
+        // Zonder dit vallen ze terug op zwart en zijn ze onleesbaar op de donkere achtergrond.
+        CompositionLocalProvider(LocalContentColor provides Mist, content = content)
+    }
 }

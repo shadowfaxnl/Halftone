@@ -10,6 +10,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.security.MessageDigest
 import java.security.SecureRandom
+import app.halftone.R
+import app.halftone.Str
 
 const val API_VERSION = "1.16.1"
 const val CLIENT_NAME = "Halftone"
@@ -45,7 +47,7 @@ class SubsonicClient(
     var maxBitRate: Int = 0
 
     private fun requireCredentials(): Credentials =
-        credentials ?: throw SubsonicException(10, "Je bent niet ingelogd")
+        credentials ?: throw SubsonicException(10, Str.get(R.string.error_not_logged_in))
 
     fun url(
         endpoint: String,
@@ -81,10 +83,10 @@ class SubsonicClient(
             .build()
         http.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {
-                throw SubsonicException(response.code, "De server antwoordde met HTTP ${response.code}")
+                throw SubsonicException(response.code, Str.get(R.string.error_http, response.code))
             }
             val body = response.body?.string()
-                ?: throw SubsonicException(0, "Leeg antwoord van de server")
+                ?: throw SubsonicException(0, Str.get(R.string.error_empty_response))
             val result = json.decodeFromString<Envelope>(body).response
             if (result.status != "ok") {
                 throw SubsonicException(result.error?.code ?: 0, friendlyError(result.error))
@@ -111,11 +113,11 @@ class SubsonicClient(
         url("download", mapOf("id" to songId)).toString()
 
     private fun friendlyError(error: SubsonicError?): String = when (error?.code) {
-        40 -> "Gebruikersnaam of wachtwoord klopt niet"
-        41 -> "Deze server ondersteunt geen token-login"
-        50 -> "Deze gebruiker heeft geen toegang"
-        70 -> "Niet gevonden op de server"
-        else -> error?.message ?: "Onbekende fout van de server"
+        40 -> Str.get(R.string.error_wrong_credentials)
+        41 -> Str.get(R.string.error_no_token_auth)
+        50 -> Str.get(R.string.error_no_access)
+        70 -> Str.get(R.string.error_not_found)
+        else -> error?.message ?: Str.get(R.string.error_server_unknown)
     }
 }
 

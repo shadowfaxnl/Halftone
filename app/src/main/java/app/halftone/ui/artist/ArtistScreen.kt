@@ -53,6 +53,9 @@ import app.halftone.ui.theme.Ink
 import app.halftone.ui.theme.MistDim
 import app.halftone.ui.theme.rememberCoverColors
 import coil3.compose.AsyncImage
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
+import app.halftone.R
 
 @Composable
 fun ArtistScreen(artistId: String, navigator: Navigator, padding: PaddingValues) {
@@ -133,7 +136,7 @@ private fun ArtistContent(artist: ArtistWithAlbums, navigator: Navigator, paddin
                         maxLines = 2,
                     )
                     Text(
-                        if (artist.albumCount == 1) "1 album" else "${artist.albumCount} albums",
+                        pluralStringResource(R.plurals.albums_count, artist.albumCount, artist.albumCount),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MistDim,
                     )
@@ -152,7 +155,7 @@ private fun ArtistContent(artist: ArtistWithAlbums, navigator: Navigator, paddin
                         ) {
                             Icon(Icons.Rounded.PlayArrow, null)
                             Spacer(Modifier.width(6.dp))
-                            Text("Afspelen")
+                            Text(stringResource(R.string.play))
                         }
                         FilledTonalButton(
                             onClick = { container.actions.playArtist(artist.id, shuffle = true) },
@@ -164,7 +167,7 @@ private fun ArtistContent(artist: ArtistWithAlbums, navigator: Navigator, paddin
                         ) {
                             Icon(Icons.Rounded.Shuffle, null)
                             Spacer(Modifier.width(6.dp))
-                            Text("Shuffle")
+                            Text(stringResource(R.string.shuffle))
                         }
                         HeartButton(
                             starred = artist.id in starred,
@@ -177,7 +180,7 @@ private fun ArtistContent(artist: ArtistWithAlbums, navigator: Navigator, paddin
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             Text(
-                "Albums",
+                stringResource(R.string.albums),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(start = 8.dp, top = 16.dp),
             )

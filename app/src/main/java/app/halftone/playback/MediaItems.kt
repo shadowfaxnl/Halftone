@@ -7,6 +7,8 @@ import androidx.media3.common.MediaMetadata
 import app.halftone.data.COVER_LARGE
 import app.halftone.data.Song
 import app.halftone.data.SubsonicClient
+import app.halftone.R
+import app.halftone.Str
 
 private const val EXTRA_ALBUM_ID = "halftone.albumId"
 private const val EXTRA_ARTIST_ID = "halftone.artistId"
@@ -70,7 +72,7 @@ fun MediaItem.toQueueItem(): QueueItem {
     val extras = meta.extras
     return QueueItem(
         mediaId = mediaId,
-        title = meta.title?.toString() ?: "Onbekend nummer",
+        title = meta.title?.toString() ?: Str.get(R.string.unknown_song),
         artist = meta.artist?.toString().orEmpty(),
         album = meta.albumTitle?.toString().orEmpty(),
         coverArt = extras?.getString(EXTRA_COVER),

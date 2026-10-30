@@ -17,7 +17,13 @@ De hele app kleurt mee met het hoesje dat speelt: accentkleuren, achtergrondverl
 - Afspelen op de achtergrond met melding, vergrendelscherm en Bluetooth-knoppen
 - Miniplayer en een volledig spelerscherm met vegen voor volgende/vorige en een wachtrij
 
-**Nieuw in 0.4: Engels en Nederlands**
+**Nieuw in 0.5: Android Auto**
+- Tabbladen Start, Afspeellijsten, Favorieten en Bibliotheek (artiesten en downloads), met hoesjes. Tik op een nummer en het hele album of de afspeellijst speelt vanaf daar.
+- Zoeken op het autoscherm, of zeg *"Hey Google, speel Doe Maar op Halftone"*.
+- Geen bereik? Op Start staan dan je downloads.
+- Zelf de APK geïnstalleerd? Zet in de Android Auto-instellingen eerst ontwikkelaarsmodus aan (tik tien keer op **Versie**) en daarna bij ⋮ › **Instellingen voor ontwikkelaars** de optie **Onbekende bronnen**. Anders verbergt Android Auto de app.
+
+**Sinds 0.4: Engels en Nederlands**
 - De hele interface staat in Android-taalbestanden: Engels is de standaard, Nederlands is ingebouwd (`res/values/strings.xml` en `res/values-nl/strings.xml`).
 - De app volgt de taal van je telefoon. Op Android 13+ kies je via Instellingen › Taal een taal alleen voor Halftone.
 - Een taal toevoegen? Kopieer `values/strings.xml` naar bijvoorbeeld `values-de/`, vertaal de teksten en voeg de taal toe aan `res/xml/locales_config.xml`.
@@ -111,7 +117,7 @@ app/src/main/java/app/halftone/
 
 ## Ideeën voor later
 
-Android Auto, een widget op het startscherm, songteksten, ReplayGain, de wachtrij bewaren na het sluiten van de app, en een Flatpak voor de Linux-versie.
+Een widget op het startscherm, songteksten, ReplayGain, de wachtrij bewaren na het sluiten van de app, en een Flatpak voor de Linux-versie.
 
 ## Licentie
 

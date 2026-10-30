@@ -39,6 +39,8 @@ import app.halftone.ui.common.PlaylistCard
 import app.halftone.ui.common.appViewModel
 import app.halftone.ui.common.pressable
 import app.halftone.ui.theme.MistDim
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 @Composable
 fun PlaylistsTab(navigator: Navigator, padding: PaddingValues) {
@@ -71,8 +73,8 @@ fun PlaylistsTab(navigator: Navigator, padding: PaddingValues) {
 
     if (creating) {
         PlaylistNameDialog(
-            title = "Nieuwe afspeellijst",
-            confirmLabel = "Maken",
+            title = stringResource(R.string.new_playlist),
+            confirmLabel = stringResource(R.string.create),
             onConfirm = { name ->
                 creating = false
                 container.launchSafely { container.repository.createPlaylist(name) }
@@ -106,8 +108,8 @@ private fun NewPlaylistCard(onClick: () -> Unit) {
             }
         }
         Spacer(Modifier.height(10.dp))
-        Text("Nieuwe afspeellijst", style = MaterialTheme.typography.titleSmall)
-        Text("Begin een verzameling", style = MaterialTheme.typography.bodySmall, color = MistDim)
+        Text(stringResource(R.string.new_playlist), style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.start_collection), style = MaterialTheme.typography.bodySmall, color = MistDim)
         Spacer(Modifier.padding(bottom = 6.dp))
     }
 }

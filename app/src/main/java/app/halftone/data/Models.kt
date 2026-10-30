@@ -2,6 +2,8 @@ package app.halftone.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import app.halftone.R
+import app.halftone.Str
 
 /*
  * Subsonic JSON-modellen (API 1.16.1, zoals Navidrome die levert).
@@ -30,6 +32,7 @@ data class SubsonicResponse(
     val starred2: Starred? = null,
     val playlists: PlaylistIndex? = null,
     val playlist: PlaylistWithSongs? = null,
+    val song: Song? = null,
 )
 
 @Serializable
@@ -52,7 +55,7 @@ data class IndexEntry(
 @Serializable
 data class Artist(
     val id: String,
-    val name: String = "Onbekende artiest",
+    val name: String = Str.get(R.string.unknown_artist),
     val coverArt: String? = null,
     val albumCount: Int = 0,
     val artistImageUrl: String? = null,
@@ -61,7 +64,7 @@ data class Artist(
 @Serializable
 data class ArtistWithAlbums(
     val id: String,
-    val name: String = "Onbekende artiest",
+    val name: String = Str.get(R.string.unknown_artist),
     val coverArt: String? = null,
     val albumCount: Int = 0,
     val album: List<Album> = emptyList(),
@@ -70,7 +73,7 @@ data class ArtistWithAlbums(
 @Serializable
 data class Album(
     val id: String,
-    val name: String = "Onbekend album",
+    val name: String = Str.get(R.string.unknown_album),
     val artist: String? = null,
     val artistId: String? = null,
     val coverArt: String? = null,
@@ -83,7 +86,7 @@ data class Album(
 @Serializable
 data class AlbumWithSongs(
     val id: String,
-    val name: String = "Onbekend album",
+    val name: String = Str.get(R.string.unknown_album),
     val artist: String? = null,
     val artistId: String? = null,
     val coverArt: String? = null,
@@ -97,7 +100,7 @@ data class AlbumWithSongs(
 @Serializable
 data class Song(
     val id: String,
-    val title: String = "Onbekend nummer",
+    val title: String = Str.get(R.string.unknown_song),
     val album: String? = null,
     val albumId: String? = null,
     val artist: String? = null,
@@ -147,7 +150,7 @@ data class PlaylistIndex(
 @Serializable
 data class Playlist(
     val id: String,
-    val name: String = "Naamloze afspeellijst",
+    val name: String = Str.get(R.string.untitled_playlist),
     val comment: String? = null,
     val owner: String? = null,
     @SerialName("public") val isPublic: Boolean = false,
@@ -159,7 +162,7 @@ data class Playlist(
 @Serializable
 data class PlaylistWithSongs(
     val id: String,
-    val name: String = "Naamloze afspeellijst",
+    val name: String = Str.get(R.string.untitled_playlist),
     val comment: String? = null,
     val owner: String? = null,
     @SerialName("public") val isPublic: Boolean = false,

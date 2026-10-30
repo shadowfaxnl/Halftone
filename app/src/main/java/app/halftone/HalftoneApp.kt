@@ -15,6 +15,7 @@ class HalftoneApp : Application(), SingletonImageLoader.Factory {
 
     override fun onCreate() {
         super.onCreate()
+        Str.init(this)
         BrandFonts.init(this)
         container = AppContainer(this)
     }

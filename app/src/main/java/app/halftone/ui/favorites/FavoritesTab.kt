@@ -48,6 +48,8 @@ import app.halftone.ui.common.pressable
 import app.halftone.ui.common.songMenu
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 @OptIn(FlowPreview::class)
 @Composable
@@ -62,8 +64,8 @@ fun FavoritesTab(navigator: Navigator, padding: PaddingValues) {
         if (starred.isEmpty) {
             EmptyView(
                 Icons.Rounded.FavoriteBorder,
-                "Nog geen favorieten",
-                "Tik op het hartje bij een nummer, album of artiest om het hier te bewaren.",
+                stringResource(R.string.favorites_empty_title),
+                stringResource(R.string.favorites_empty_text),
             )
         } else {
             FavoritesContent(starred, navigator, padding)
@@ -84,7 +86,7 @@ private fun FavoritesContent(starred: Starred, navigator: Navigator, padding: Pa
         if (starred.artist.isNotEmpty()) {
             item(key = "artists") {
                 Column {
-                    SectionHeader("Artiesten")
+                    SectionHeader(stringResource(R.string.artists))
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(18.dp),
@@ -114,7 +116,7 @@ private fun FavoritesContent(starred: Starred, navigator: Navigator, padding: Pa
             item(key = "albums") {
                 Column {
                     Spacer(Modifier.height(8.dp))
-                    SectionHeader("Albums")
+                    SectionHeader(stringResource(R.string.albums))
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -136,10 +138,10 @@ private fun FavoritesContent(starred: Starred, navigator: Navigator, padding: Pa
                             .padding(end = 16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        SectionHeader("Nummers", Modifier.weight(1f))
-                        SmallAction(Icons.Rounded.PlayArrow, "Afspelen") { container.player.playSongs(songs) }
+                        SectionHeader(stringResource(R.string.songs), Modifier.weight(1f))
+                        SmallAction(Icons.Rounded.PlayArrow, stringResource(R.string.play)) { container.player.playSongs(songs) }
                         Spacer(Modifier.width(8.dp))
-                        SmallAction(Icons.Rounded.Shuffle, "Shuffle") { container.player.playSongs(songs.shuffled()) }
+                        SmallAction(Icons.Rounded.Shuffle, stringResource(R.string.shuffle)) { container.player.playSongs(songs.shuffled()) }
                     }
                 }
             }

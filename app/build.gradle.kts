@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.net.URI
 
 plugins {
     alias(libs.plugins.android.application)
@@ -10,14 +9,14 @@ plugins {
 
 android {
     namespace = "app.halftone"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "app.halftone"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 3
-        versionName = "0.3.0"
+        targetSdk = 36
+        versionCode = 8
+        versionName = "0.5.0"
     }
 
     buildTypes {
@@ -104,7 +103,7 @@ val fetchBrandFonts by tasks.registering {
             if (target.exists() && target.length() > 10_000) return@forEach
             val ok = urls.any { url ->
                 runCatching {
-                    URI(url).toURL().openStream().use { input ->
+                    java.net.URI(url).toURL().openStream().use { input ->
                         target.outputStream().use { input.copyTo(it) }
                     }
                     target.length() > 10_000

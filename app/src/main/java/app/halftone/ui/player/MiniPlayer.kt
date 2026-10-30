@@ -41,9 +41,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.halftone.playback.PlayerState
 import app.halftone.ui.common.CoverArt
+import app.halftone.ui.theme.Mist
 import app.halftone.ui.theme.Ink3
 import app.halftone.ui.theme.MistDim
 import kotlinx.coroutines.flow.StateFlow
+import androidx.compose.ui.res.stringResource
+import app.halftone.R
 
 @Composable
 fun MiniPlayer(
@@ -60,6 +63,7 @@ fun MiniPlayer(
         onClick = onOpen,
         shape = RoundedCornerShape(20.dp),
         color = accent.copy(alpha = 0.18f).compositeOver(Ink3),
+        contentColor = Mist,
         modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 6.dp)
             .fillMaxWidth(),
@@ -111,13 +115,13 @@ fun MiniPlayer(
                     ) { playing ->
                         Icon(
                             if (playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
-                            contentDescription = if (playing) "Pauzeren" else "Afspelen",
+                            contentDescription = stringResource(if (playing) R.string.pause else R.string.play),
                             modifier = Modifier.size(30.dp),
                         )
                     }
                 }
                 IconButton(onClick = onNext) {
-                    Icon(Icons.Rounded.SkipNext, contentDescription = "Volgende", modifier = Modifier.size(28.dp))
+                    Icon(Icons.Rounded.SkipNext, contentDescription = stringResource(R.string.next), modifier = Modifier.size(28.dp))
                 }
             }
             MiniProgress(position, state.durationMs)

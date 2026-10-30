@@ -10,4 +10,4 @@ Icon=halftone
 Terminal=false
 Categories=AudioVideo;Audio;Player;
 Keywords=music;subsonic;navidrome;player;audio;
-StartupWMClass=app-halftone-desktop-MainKt
+StartupWMClass=halftone

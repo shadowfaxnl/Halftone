@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "app.halftone"
-version = "0.4.0"
+version = "0.4.1"
 
 dependencies {
     implementation(compose.desktop.currentOs)
@@ -32,7 +32,12 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "app.halftone.desktop.MainKt"
-        jvmArgs += listOf("-Dsun.java2d.uiScale.enabled=true", "-Dawt.useSystemAAFontSettings=on")
+        jvmArgs += listOf(
+            "-Dsun.java2d.uiScale.enabled=true",
+            "-Dawt.useSystemAAFontSettings=on",
+            // Nodig om de vensternaam (WM_CLASS) te zetten, zie DesktopIntegration.
+            "--add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED",
+        )
 
         buildTypes.release.proguard {
             // JNA, D-Bus en kotlinx.serialization werken met reflectie; niet verkleinen.
@@ -42,7 +47,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.AppImage)
             packageName = "halftone"
-            packageVersion = "0.4.0"
+            packageVersion = "0.4.1"
             description = "Music player for Navidrome and Subsonic servers"
             vendor = "shadowfaxnl"
             licenseFile.set(rootProject.file("../LICENSE"))

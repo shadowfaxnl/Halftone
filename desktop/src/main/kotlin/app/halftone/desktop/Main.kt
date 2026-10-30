@@ -42,6 +42,10 @@ import javax.imageio.ImageIO
 import kotlin.system.exitProcess
 
 fun main() {
+    // Naam en icoon voor de taakbalk: vóór het eerste venster.
+    DesktopIntegration.setWindowClass()
+    DesktopIntegration.installLauncher()
+
     // Taal kiezen voordat er iets getoond wordt.
     val app = AppState()
     selectLanguage(app.settings.state.value.language)

@@ -168,19 +168,43 @@ class PlaybackService : MediaLibraryService() {
         }
     }
 
-    /**
-     * Voert een bladeractie uit en zet fouten om in een foutresultaat in plaats van een crash.
-     * Een foutresultaat draagt geen waarde, dus de typeconversie hieronder is altijd veilig.
+    /*
+     * Bladeracties voor Android Auto. Een fout (bijvoorbeeld een onbereikbare server) wordt een
+     * foutresultaat in plaats van een crash. Drie varianten met een vast type, zodat de compiler
+     * niets hoeft af te leiden bij het maken van het foutresultaat.
      */
-    @Suppress("UNCHECKED_CAST")
-    private fun <T> libraryCall(block: suspend () -> LibraryResult<T>): ListenableFuture<LibraryResult<T>> =
+    private fun itemCall(block: suspend () -> LibraryResult<MediaItem>): ListenableFuture<LibraryResult<MediaItem>> =
         scope.future {
             try {
                 block()
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Throwable) {
-                LibraryResult.ofError(SessionError.ERROR_IO)
+                LibraryResult.ofError<MediaItem>(SessionError.ERROR_IO)
+            }
+        }
+
+    private fun listCall(
+        block: suspend () -> LibraryResult<ImmutableList<MediaItem>>,
+    ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> =
+        scope.future {
+            try {
+                block()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Throwable) {
+                LibraryResult.ofError<ImmutableList<MediaItem>>(SessionError.ERROR_IO)
+            }
+        }
+
+    private fun voidCall(block: suspend () -> LibraryResult<Void>): ListenableFuture<LibraryResult<Void>> =
+        scope.future {
+            try {
+                block()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Throwable) {
+                LibraryResult.ofError<Void>(SessionError.ERROR_IO)
             }
         }
 
@@ -235,16 +259,16 @@ class PlaybackService : MediaLibraryService() {
         ): ListenableFuture<LibraryResult<MediaItem>> {
             grantArtwork(browser.packageName)
             val rootParams = LibraryParams.Builder().setExtras(library.rootExtras()).build()
-            return libraryCall { LibraryResult.ofItem(library.root(), rootParams) }
+            return itemCall { LibraryResult.ofItem(library.root(), rootParams) }
         }
 
         override fun onGetItem(
             session: MediaLibrarySession,
             browser: MediaSession.ControllerInfo,
             mediaId: String,
-        ): ListenableFuture<LibraryResult<MediaItem>> = libraryCall {
+        ): ListenableFuture<LibraryResult<MediaItem>> = itemCall {
             library.item(mediaId)?.let { LibraryResult.ofItem(it, null) }
-                ?: LibraryResult.ofError(SessionError.ERROR_BAD_VALUE)
+                ?: LibraryResult.ofError<MediaItem>(SessionError.ERROR_BAD_VALUE)
         }
 
         override fun onGetChildren(
@@ -254,7 +278,7 @@ class PlaybackService : MediaLibraryService() {
             page: Int,
             pageSize: Int,
             params: LibraryParams?,
-        ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> = libraryCall {
+        ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> = listCall {
             LibraryResult.ofItemList(library.children(parentId).page(page, pageSize), params)
         }
 
@@ -263,7 +287,7 @@ class PlaybackService : MediaLibraryService() {
             browser: MediaSession.ControllerInfo,
             query: String,
             params: LibraryParams?,
-        ): ListenableFuture<LibraryResult<Void>> = libraryCall {
+        ): ListenableFuture<LibraryResult<Void>> = voidCall {
             val count = library.search(query).size
             session.notifySearchResultChanged(browser, query, count, params)
             LibraryResult.ofVoid()
@@ -276,7 +300,7 @@ class PlaybackService : MediaLibraryService() {
             page: Int,
             pageSize: Int,
             params: LibraryParams?,
-        ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> = libraryCall {
+        ): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> = listCall {
             LibraryResult.ofItemList(library.search(query).page(page, pageSize), params)
         }
     }
